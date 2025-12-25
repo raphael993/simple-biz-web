@@ -1,0 +1,29 @@
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>Gerenciamento de clientes</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions>
+        <button [matButton]="!showClientForm() ? 'outlined' : ''" (click)="toggleClientForm(false)">Listagem de clientes</button>
+        <button [matButton]="showClientForm() ? 'outlined' : ''" (click)="toggleClientForm(true)">Cadastrar novo cliente</button>
+    </mat-card-actions>
+</mat-card>
+<br>
+@if(showClientForm()) {
+    <mat-card appearance="outlined">
+        <mat-card-content>
+            <app-create-client-component 
+                (createClient)="createClient($event)"
+                (showClientForm)="toggleClientForm($event)"
+            />
+        </mat-card-content>
+    </mat-card>
+} @else {
+    <mat-card appearance="outlined">
+        <mat-card-content>
+            <app-client-table-component 
+                [clientList]="clientList"
+                (deleteClient)="deleteClient($event)"
+            />
+        </mat-card-content>
+    </mat-card>
+}

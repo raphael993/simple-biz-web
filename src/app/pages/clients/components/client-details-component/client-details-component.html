@@ -1,0 +1,160 @@
+@if (showEditClient()) {
+  <mat-card class="client-view">
+    <mat-card-header>
+      <mat-card-title>Editar Cliente</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-edit-client-component 
+        (cancel)="toggleShowEditClient()"
+        (save)="saveClient($event)"
+      />
+    </mat-card-content>
+  </mat-card>
+} 
+@if (!showEditClient() && selectedClient(); as selectedClient) {
+  <mat-card class="client-view">
+    <!-- Header com avatar -->
+    <mat-card-header>
+      <div mat-card-avatar class="avatar">
+        {{ selectedClient.name[0] }}{{ selectedClient.name.split(' ')[1]?.[0] || '' }}
+      </div>
+
+      <mat-card-title>{{ selectedClient.name }}</mat-card-title>
+
+      @if (selectedClient.email) {
+        <mat-card-subtitle>{{ selectedClient.email }}</mat-card-subtitle>
+      }
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-list>
+        @if (selectedClient.phoneNumber) {
+          <mat-list-item>
+            <mat-icon matListItemIcon>phone</mat-icon>
+            <div matListItemTitle>Telefone</div>
+            <div matListItemLine>{{ selectedClient.phoneNumber }}</div>
+          </mat-list-item>
+        }
+
+        @if (selectedClient.document) {
+          <mat-list-item>
+            <mat-icon matListItemIcon>badge</mat-icon>
+            <div matListItemTitle>Documento</div>
+            <div matListItemLine>{{ selectedClient.document }}</div>
+          </mat-list-item>
+        }
+
+        @if (selectedClient.address) {
+          <mat-list-item>
+            <mat-icon matListItemIcon>location_on</mat-icon>
+            <div matListItemTitle>Endereço</div>
+            <div matListItemLine>{{ selectedClient.address }}</div>
+          </mat-list-item>
+        }
+
+        @if (selectedClient.bithDate) {
+          <mat-list-item>
+            <mat-icon matListItemIcon>cake</mat-icon>
+            <div matListItemTitle>Data de nascimento</div>
+            <div matListItemLine>
+              {{ selectedClient.bithDate | date:'dd/MM/yyyy' }}
+            </div>
+          </mat-list-item>
+        }
+
+        @if (selectedClient.notes) {
+          <mat-list-item>
+            <mat-icon matListItemIcon>notes</mat-icon>
+            <div matListItemTitle>Observações</div>
+            <div matListItemLine>{{ selectedClient.notes }}</div>
+          </mat-list-item>
+        }
+
+        @if (selectedClient.createAt) {
+          <mat-list-item>
+            <mat-icon matListItemIcon>event</mat-icon>
+            <div matListItemTitle>Criado em</div>
+            <div matListItemLine>
+              {{ selectedClient.createAt | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+          </mat-list-item>
+        }
+      </mat-list>
+    </mat-card-content>
+
+      <mat-card-actions class="actions">
+        <button mat-stroked-button type="button" [routerLink]="['../']">
+          <mat-icon>arrow_back</mat-icon>
+          Voltar
+        </button>
+
+        <button mat-stroked-button color="primary" type="button" (click)="toggleShowEditClient()">
+          <mat-icon>edit</mat-icon>
+          Editar
+        </button>
+
+        <button mat-raised-button color="warn" type="button">
+          <mat-icon>delete</mat-icon>
+          Excluir
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+
+  <mat-card class="purchase-history">
+
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>shopping_cart</mat-icon>
+        Histórico de Compras
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        Compras realizadas pelo cliente
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <mat-list>
+
+        <mat-list-item>
+          <mat-icon matListItemIcon>receipt_long</mat-icon>
+
+          <div matListItemTitle>
+            15/08/2024 • 14:32
+          </div>
+
+          <div matListItemLine>
+            3 itens • <strong class="cash">R$ 120,00</strong>
+          </div>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-icon matListItemIcon>receipt_long</mat-icon>
+
+          <div matListItemTitle>
+            02/07/2024 • 10:15
+          </div>
+
+          <div matListItemLine>
+            1 item • <strong class="cash">R$ 45,90</strong>
+          </div>
+        </mat-list-item>
+
+        <mat-list-item>
+          <mat-icon matListItemIcon>receipt_long</mat-icon>
+
+          <div matListItemTitle>
+            18/06/2024 • 18:47
+          </div>
+
+          <div matListItemLine>
+            5 itens • <strong class="cash">R$ 389,00</strong>
+          </div>
+        </mat-list-item>
+
+      </mat-list>
+
+    </mat-card-content>
+  </mat-card>

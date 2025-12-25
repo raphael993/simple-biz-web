@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Deletar cliente</h2>
+<mat-dialog-content>
+  Tem certeza que deseja deletar este cliente?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close (click)="close(false)">Não</button>
+  <button matButton mat-dialog-close cdkFocusInitial (click)="close(true)">Sim</button>
+</mat-dialog-actions>

@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Desktop */
+.menu-desktop {
+  display: flex;
+  gap: 8px;
+}
+
+.menu-desktop mat-icon {
+  margin-right: 6px;
+}
+
+/* Mobile */
+.menu-mobile {
+  display: none;
+}
+
+/* Breakpoint */
+@media (max-width: 768px) {
+  .menu-desktop {
+    display: none;
+  }
+
+  .menu-mobile {
+    display: inline-flex;
+  }
+}

@@ -1,0 +1,74 @@
+<mat-toolbar color="primary" class="header">
+
+  <!-- Logo -->
+  <span class="logo" routerLink="/">SimpleBiz</span>
+
+  <span class="spacer"></span>
+
+  <!-- Menu DESKTOP -->
+  <nav class="menu-desktop">
+    <a mat-button routerLink="/">
+      <mat-icon>point_of_sale</mat-icon>
+      Vender
+    </a>
+
+    <a mat-button routerLink="/clients">
+      <mat-icon>people</mat-icon>
+      Clientes
+    </a>
+
+    <a mat-button routerLink="/products">
+      <mat-icon>inventory_2</mat-icon>
+      Produtos & Serviços
+    </a>
+
+    <a mat-button routerLink="/callendar">
+      <mat-icon>calendar_month</mat-icon>
+      Agendamentos
+    </a>
+
+    <a mat-button routerLink="/sales">
+      <mat-icon>history</mat-icon>
+      Histórico
+    </a>
+  </nav>
+
+  <!-- Botão HAMBÚRGUER (mobile) -->
+  <button
+    mat-icon-button
+    class="menu-mobile"
+    [matMenuTriggerFor]="mobileMenu"
+    aria-label="Menu"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Menu DROPDOWN -->
+  <mat-menu #mobileMenu="matMenu">
+    <button mat-menu-item routerLink="/">
+      <mat-icon>point_of_sale</mat-icon>
+      <span>Vender</span>
+    </button>
+
+    <button mat-menu-item routerLink="/clients">
+      <mat-icon>people</mat-icon>
+      <span>Clientes</span>
+    </button>
+
+    <button mat-menu-item routerLink="/products">
+      <mat-icon>inventory_2</mat-icon>
+      <span>Produtos</span>
+    </button>
+
+    <button mat-menu-item routerLink="/callendar">
+      <mat-icon>calendar_month</mat-icon>
+      <span>Agendamentos</span>
+    </button>
+
+    <button mat-menu-item routerLink="/sales">
+      <mat-icon>history</mat-icon>
+      <span>Histórico</span>
+    </button>
+  </mat-menu>
+
+</mat-toolbar>

@@ -1,0 +1,21 @@
+:host {
+    .full-width {
+        width: 50%;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .full-width {
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,69 @@
+<form [formGroup]="clientForm">
+    <!-- Nome -->
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name">
+
+        @if (clientForm.get('name')?.touched && clientForm.get('name')?.invalid) {
+        <mat-error>
+            @if (clientForm.get('name')?.errors?.['required']) {
+            Campo obrigatório
+            }
+        </mat-error>
+        }
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email">
+
+        @if (clientForm.get('email')?.touched && clientForm.get('email')?.invalid) {
+        <mat-error>
+            @if (clientForm.get('email')?.errors?.['email']) {
+            Email inválido
+            }
+        </mat-error>
+        }
+    </mat-form-field>
+
+    <!-- Telefone -->
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Telefone</mat-label>
+        <input matInput formControlName="phoneNumber">
+    </mat-form-field>
+
+    <!-- Documento -->
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Documento (CPF / CNPJ)</mat-label>
+        <input matInput formControlName="document">
+    </mat-form-field>
+
+    <!-- Endereço -->
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Endereço</mat-label>
+        <textarea matInput rows="2" formControlName="address"></textarea>
+    </mat-form-field>
+
+    <!-- Data de nascimento -->
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Data de nascimento</mat-label>
+        <input matInput [matDatepicker]="birthPicker" formControlName="bithDate">
+        <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+        <mat-datepicker #birthPicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Observações -->
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Observações</mat-label>
+        <textarea matInput rows="3" formControlName="notes"></textarea>
+    </mat-form-field>
+</form>
+
+<div class="form-actions">
+    <button mat-raised-button color="primary" type="submit" [disabled]="clientForm.invalid"
+        (click)="createClientAction()">
+        Criar cliente
+    </button>
+    <button mat-stroked-button type="button" (click)="clearForm()">Limpar</button>
+</div>
