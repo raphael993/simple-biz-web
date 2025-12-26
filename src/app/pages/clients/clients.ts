@@ -7,7 +7,7 @@ import { ClientTableComponent } from './components/client-table-component/client
 import { CreateClientComponent } from './components/create-client-component/create-client-component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-clients',
@@ -24,7 +24,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ClientsComponent implements OnInit {
   private readonly clientService = inject(ClientService);
-  private _snackBar = inject(MatSnackBar);
+  private notificationService = inject(NotificationService);
 
   public showClientForm = signal<boolean>(false);
   public clientList: Array<Client> = [];
@@ -52,9 +52,7 @@ export class ClientsComponent implements OnInit {
       return;
     }
     this.clientService.removeClient(client.id);
-    this._snackBar.open('Cliente removido com sucesso!', undefined, {
-      duration: 3000 
-    });
+    this.notificationService.openNotification('Cliente removido com sucesso!');
     this.getClientList();
   }
 

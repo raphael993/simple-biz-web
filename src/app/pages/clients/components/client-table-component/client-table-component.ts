@@ -8,9 +8,10 @@ import { ClientService } from '../../../../services/client.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialog } from '@angular/material/dialog';
-import { DeleteClientConfirmationDialogComponent } from '../delete-client-confirmation-dialog-component/delete-client-confirmation-dialog-component';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { UtilsService } from '../../../../services/utils.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { DialogService } from '../../../../services/dialog.service';
 
 @Component({
   selector: 'app-client-table-component',
@@ -21,7 +22,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatMenuModule,
   ],
   templateUrl: './client-table-component.html',
   styleUrl: './client-table-component.scss',
@@ -34,7 +36,8 @@ export class ClientTableComponent implements AfterViewInit {
   private clientService = inject(ClientService);
   private router = inject(Router)
 
-  private readonly dialog = inject(MatDialog);
+  private readonly dialogService = inject(DialogService);
+  private readonly utils = inject(UtilsService);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -46,19 +49,26 @@ export class ClientTableComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.checkScreen();
   }
 
-  confirmDeletion(client: Client): void {
-    this.dialog.open(DeleteClientConfirmationDialogComponent, {
-      width: '250px'
-    }).afterClosed().subscribe((data) => {
-      if (!data) {
-        return
-      }
-      this.deleteClient.emit(client)
-    });
+  public checkScreen() {
+    if (this.utils.isMobileScreen()) {
+      this.displayedColumns = ['Nome', 'Telefone', 'AçõesMobile'];
+    }
+  }
+
+  public confirmDeletion(client: Client): void {
+    this.dialogService
+      .showConfirmationDialog({ title: 'Excluir cliente', message: `Tem certeza que deseja excluir o cliente ${client.name}?` })
+      .subscribe(result => {
+        if (!result) {
+          return
+        }
+        this.deleteClient.emit(client);
+      });
   }
 
   public search(event: Event) {
