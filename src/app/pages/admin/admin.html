@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Administração</mat-card-title>
+    <mat-card-subtitle>Backup e restauração de dados</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="actions">
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="exportData()"
+    >
+      <mat-icon>download</mat-icon>
+      Exportar Dados
+    </button>
+
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="fileInput.click()"
+    >
+      <mat-icon>upload</mat-icon>
+      Importar Dados
+    </button>
+
+    <input
+      #fileInput
+      type="file"
+      accept="application/json"
+      hidden
+      (change)="importData($event)"
+    />
+
+  </mat-card-content>
+</mat-card>

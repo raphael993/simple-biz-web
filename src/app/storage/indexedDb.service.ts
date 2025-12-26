@@ -1,22 +1,10 @@
 import { Injectable } from '@angular/core';
-import { openDB, DBSchema, IDBPDatabase, StoreNames } from 'idb';
-import { Client } from '../interfaces/client.interface';
-import { Product } from '../interfaces/product.interface';
-import { Sale } from '../interfaces/sale.interface';
+import { openDB, DBSchema, StoreNames } from 'idb';
 
-interface AppDB extends DBSchema {
-  clients: {
-    key: string;
-    value: Client;
-  };
-  products: {
-    key: string;
-    value: Product;
-  };
-  sale: {
-    key: string;
-    value: Sale;
-  };
+export interface AppDB extends DBSchema {
+  clients: { key: string; value: any };
+  products: { key: string; value: any };
+  sale: { key: string; value: any };
 }
 
 @Injectable({ providedIn: 'root' })
@@ -76,5 +64,33 @@ export class IndexedDbService {
   ): Promise<void> {
     const db = await this.dbPromise;
     await db.delete(storeName, id);
+  }
+
+  // backup
+
+  async exportAll(): Promise<Record<string, unknown[]>> {
+    const db = await this.dbPromise;
+
+    const data: Record<string, unknown[]> = {};
+    for (const store of db.objectStoreNames) {
+      data[store] = await db.getAll(store);
+    }
+
+    return data;
+  }
+
+  async importAll(data: Record<string, unknown[]>): Promise<void> {
+    const db = await this.dbPromise;
+    const tx = db.transaction(db.objectStoreNames, 'readwrite');
+
+    for (const store of db.objectStoreNames) {
+      await tx.objectStore(store).clear();
+      const items = data[store] ?? [];
+      for (const item of items) {
+        await tx.objectStore(store).put(item);
+      }
+    }
+
+    await tx.done;
   }
 }
