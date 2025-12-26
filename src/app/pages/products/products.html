@@ -1,1 +1,29 @@
-<p>products works!</p>
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>Gerenciamento de produtos</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions>
+        <button [matButton]="!showProductForm() ? 'outlined' : ''" (click)="toggleProductForm(false)">Listagem de produtos</button>
+        <button [matButton]="showProductForm() ? 'outlined' : ''" (click)="toggleProductForm(true)">Cadastrar novo produto</button>
+    </mat-card-actions>
+</mat-card>
+<br>
+@if(showProductForm()) {
+    <mat-card appearance="outlined">
+        <mat-card-content>
+            <app-create-product-component 
+                (createProduct)="createProduct($event)"
+                (showProductForm)="toggleProductForm($event)"
+            />
+        </mat-card-content>
+    </mat-card>
+} @else {
+    <mat-card appearance="outlined">
+        <mat-card-content>
+            <app-product-table-component 
+                [productList]="productList"
+                (deleteProduct)="deleteProduct($event)"
+            />
+        </mat-card-content>
+    </mat-card>
+}

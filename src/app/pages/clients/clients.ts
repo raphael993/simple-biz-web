@@ -40,13 +40,6 @@ export class ClientsComponent implements OnInit {
     });
   }
 
-  private updateClient(payload: Client): void {
-    this.clientService.updateClient(payload).subscribe(() => {
-      this.notificationService.openNotification('Cliente ataulizado com sucesso!');
-      this.getClientList();
-    });
-  }
-
   private getClientList(): void {
     this.clientService.getClientList().subscribe(data => {
       this.clientList = data;

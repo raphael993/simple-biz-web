@@ -39,7 +39,7 @@ export class CreateClientComponent implements OnInit {
       address: [null],
       bithDate: [null],
       notes: [null],
-      createAt: [null]
+      createAt: [new Date()]
     });
   }
 
