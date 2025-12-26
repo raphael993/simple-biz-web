@@ -34,26 +34,33 @@ export class ClientsComponent implements OnInit {
   }
 
   public createClient(payload: Client): void {
-    this.clientService.createClient(payload);
-    this.getClientList();
+    this.clientService.createClient(payload).subscribe(() => {
+      this.notificationService.openNotification('Cliente criado com sucesso!');
+      this.getClientList();
+    });
   }
 
-  private updateClient(client: Client): void {
-    this.clientService.updateClient(client);
-    this.getClientList();
+  private updateClient(payload: Client): void {
+    this.clientService.updateClient(payload).subscribe(() => {
+      this.notificationService.openNotification('Cliente ataulizado com sucesso!');
+      this.getClientList();
+    });
   }
 
   private getClientList(): void {
-    this.clientList = this.clientService.getClientList();
+    this.clientService.getClientList().subscribe(data => {
+      this.clientList = data;
+    })
   }
 
-  public deleteClient(client: Client) {
-    if (!client.id) {
+  public deleteClient(payload: Client) {
+    if (!payload.id) {
       return;
     }
-    this.clientService.removeClient(client.id);
-    this.notificationService.openNotification('Cliente removido com sucesso!');
-    this.getClientList();
+    this.clientService.removeClient(payload.id).subscribe(() => {
+      this.notificationService.openNotification('Cliente removido com sucesso!');
+      this.getClientList();
+    });
   }
 
   public toggleClientForm(state: boolean) {

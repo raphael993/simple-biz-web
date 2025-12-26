@@ -31,6 +31,7 @@ export class CreateClientComponent implements OnInit {
 
   private createForm(): void {
     this.clientForm = this.fb.group({
+      id: [crypto.randomUUID()],
       name: [null, [Validators.required, Validators.minLength(3)]],
       email: [null, [Validators.email]],
       phoneNumber: [null],

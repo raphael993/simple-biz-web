@@ -1,66 +1,32 @@
-import { Injectable, signal } from "@angular/core";
+import { inject, Injectable, signal } from "@angular/core";
 import { Client } from "../interfaces/client.interface";
+import { ClientStorageService } from "../storage/client-storage.service";
+import { from, Observable } from "rxjs";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
   public selectedClient = signal<Client | null>(null);
+  private readonly clientStorageService = inject(ClientStorageService);
 
-  private clientList: Array<Client> = [
-    {
-      id: '1',
-      name: 'Hydrogen',
-      phoneNumber: '(11) 9 7721 2313',
-      email: 'teste@gmail.com',
-      address: 'Rua mota milagres, 12',
-      bithDate: new Date(),
-      document: '123.123.123.22',
-      notes: 'asdasdasdasdasdasd',
-      createAt: new Date(),
-    },
-    {
-      id: '2',
-      name: 'AA DD',
-      phoneNumber: '(11) 9 7721 2313',
-      email: 'teste@gmail.com',
-      address: '',
-      bithDate: new Date(),
-      document: '',
-      notes: '',
-      createAt: new Date(),
-  }
-  ];
-
-  public getClientList(): Array<Client> {
-    return this.clientList;
+  public getClientList(): Observable<Client[]> {
+    return from(this.clientStorageService.getAll());
   }
 
-  public getClient(id: string): Client | null {
-    const source = this.clientList.find(client => client.id === id) ?? null;
-    return source;
+  public getClient(id: string): Observable<Client | undefined> {
+    return from(this.clientStorageService.getById(id));
   }
 
-  public createClient(client: Client) {
-    this.clientList?.push(client);
+  public createClient(client: Client): Observable<void> {
+    return from(this.clientStorageService.create(client));
   }
 
-  public removeClient(id: string): Client | null {
-    const source = this.clientList.find(client => client.id === id) ?? null;
-    this.clientList = this.clientList.filter(client => client.id !== id);
-
-    return source;
+  public removeClient(id: string): Observable<void> {
+    return from(this.clientStorageService.delete(id));
   }
 
-  public updateClient(client: Client): Client {
-    const id = client.id;
-    const index = this.clientList.findIndex(client => client.id === id);
-    
-    this.clientList[index] = {
-      ...this.clientList[index],
-      ...client
-    }
-
-    return this.clientList[index];
+  public updateClient(client: Client): Observable<void> {
+    return from(this.clientStorageService.update(client));
   }
 }

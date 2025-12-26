@@ -41,7 +41,7 @@ export class ClientTableComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['id', 'Nome', 'Telefone', 'E-mail', 'Ações'];
+  displayedColumns: string[] = ['Nome', 'Telefone', 'E-mail', 'Ações'];
 
   constructor() {
     effect(() => {
