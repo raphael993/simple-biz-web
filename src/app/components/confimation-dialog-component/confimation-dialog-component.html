@@ -1,6 +1,6 @@
-<h2 mat-dialog-title>Deletar cliente</h2>
+<h2 mat-dialog-title>{{ data.title }}</h2>
 <mat-dialog-content>
-  Tem certeza que deseja deletar este cliente?
+  {{ data.message }}
 </mat-dialog-content>
 <mat-dialog-actions>
   <button matButton mat-dialog-close (click)="close(false)">Não</button>
