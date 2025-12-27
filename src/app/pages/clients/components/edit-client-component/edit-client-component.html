@@ -30,13 +30,13 @@
     <!-- Telefone -->
     <mat-form-field appearance="fill" class="full-width">
         <mat-label>Telefone</mat-label>
-        <input matInput formControlName="phoneNumber">
+        <input matInput formControlName="phoneNumber" mask="(00) 00000-0000">
     </mat-form-field>
 
     <!-- Documento -->
     <mat-form-field appearance="fill" class="full-width">
         <mat-label>Documento (CPF / CNPJ)</mat-label>
-        <input matInput formControlName="document">
+        <input matInput formControlName="document" mask="000.000.000-00||00.000.000/0000-00">
     </mat-form-field>
 
     <!-- Endereço -->

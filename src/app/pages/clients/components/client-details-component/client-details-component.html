@@ -32,7 +32,7 @@
           <mat-list-item>
             <mat-icon matListItemIcon>phone</mat-icon>
             <div matListItemTitle>Telefone</div>
-            <div matListItemLine>{{ selectedClient.phoneNumber }}</div>
+            <div matListItemLine>{{ selectedClient.phoneNumber | mask: '(00) 00000-0000' }}</div>
           </mat-list-item>
         }
 
@@ -40,7 +40,7 @@
           <mat-list-item>
             <mat-icon matListItemIcon>badge</mat-icon>
             <div matListItemTitle>Documento</div>
-            <div matListItemLine>{{ selectedClient.document }}</div>
+            <div matListItemLine>{{ selectedClient.document | mask: '000.000.000-00||00.000.000/0000-00' }}</div>
           </mat-list-item>
         }
 

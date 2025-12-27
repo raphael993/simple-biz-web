@@ -1,6 +1,9 @@
+<mat-card-header>
+    <mat-card-title>Administração</mat-card-title>
+  </mat-card-header>
+
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Administração</mat-card-title>
     <mat-card-subtitle>Backup e restauração de dados</mat-card-subtitle>
   </mat-card-header>
 
@@ -34,3 +37,22 @@
 
   </mat-card-content>
 </mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-subtitle>Reset de dados</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="actions">
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="resetDb()"
+    >
+      <mat-icon>delete</mat-icon>
+      Resete do banco de dados
+    </button>
+
+  </mat-card-content>
+</mat-card>
+

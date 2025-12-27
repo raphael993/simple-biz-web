@@ -8,6 +8,7 @@ import { ProductService } from '../../../../services/product.service';
 import { Product } from '../../../../interfaces/product.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgxCurrencyDirective } from 'ngx-currency';
 
 @Component({
   selector: 'app-edit-product-component',
@@ -18,7 +19,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDatepickerModule,
     MatButtonModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgxCurrencyDirective
   ],
   templateUrl: './edit-product-component.html',
   styleUrl: './edit-product-component.scss',
@@ -44,7 +46,7 @@ export class EditProductComponent {
       price: [this.selectedProduct()?.price, [Validators.required]],
       type: [this.selectedProduct()?.type, [Validators.required]],
       isActive: [this.selectedProduct()?.isActive, [Validators.required]],
-      quantity: [this.selectedProduct()?.quantity, [Validators.required]],
+      quantity: [this.selectedProduct()?.quantity],
       createAt: [this.selectedProduct()?.createAt]
     });
   }

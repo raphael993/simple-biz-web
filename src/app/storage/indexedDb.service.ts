@@ -93,4 +93,15 @@ export class IndexedDbService {
 
     await tx.done;
   }
+
+  async resetDb() {
+    const db = await this.dbPromise;
+    const tx = db.transaction(db.objectStoreNames, 'readwrite');
+
+    db.clear('clients');
+    db.clear('products');
+    db.clear('sale');
+
+    await tx.done;
+  }
 }

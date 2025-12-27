@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from "@angular/core";
-import { Product } from "../interfaces/product.interface";
+import { FilterProduct, Product } from "../interfaces/product.interface";
 import { from, Observable } from "rxjs";
 import { ProductstorageService } from "../storage/product-storage.service";
 
@@ -8,6 +8,8 @@ import { ProductstorageService } from "../storage/product-storage.service";
 })
 export class ProductService {
   public selectedProduct = signal<Product | null>(null);
+  public filterChange = signal<FilterProduct | null>(null);
+  
   private readonly productStorageService = inject(ProductstorageService);
 
   public getProductList(): Observable<Product[]> {

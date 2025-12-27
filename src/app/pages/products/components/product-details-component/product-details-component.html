@@ -24,27 +24,44 @@
 
     <mat-card-content>
         <mat-list>
-            @if (selectedProduct.costPrice) {
-            <mat-list-item>
-                <mat-icon matListItemIcon color="#ef5630">payments</mat-icon>
-                <div matListItemTitle>Preço de custo (R$)</div>
-                <div matListItemLine>{{ selectedProduct.costPrice }}</div>
-            </mat-list-item>
-            }
-
-            @if (selectedProduct.price) {
-            <mat-list-item>
-                <mat-icon matListItemIcon color="#1f901d">payments</mat-icon>
-                <div matListItemTitle>Preço de venda (R$)</div>
-                <div matListItemLine>{{ selectedProduct.price }}</div>
-            </mat-list-item>
-            }
-
             @if (selectedProduct.type) {
             <mat-list-item>
                 <mat-icon matListItemIcon>shopping_cart</mat-icon>
                 <div matListItemTitle>Tipo</div>
                 <div matListItemLine>{{ selectedProduct.type === 'product' ? 'Produto' : 'Serviço' }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.costPrice) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>payments</mat-icon>
+                <div matListItemTitle>Preço de custo</div>
+                <div matListItemLine>{{ selectedProduct.costPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.price) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>payments</mat-icon>
+                <div matListItemTitle>Preço de venda</div>
+                <div matListItemLine>{{ selectedProduct.price | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.costPrice && selectedProduct.price) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>payments</mat-icon>
+                <div matListItemTitle>Lucro</div>
+                <div matListItemLine>Por unidade: {{ (selectedProduct.price - selectedProduct.costPrice) | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+                <div matListItemLine>Total em estoque {{ (selectedProduct.price - selectedProduct.costPrice * selectedProduct.quantity) | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.quantity) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>notes</mat-icon>
+                <div matListItemTitle>Quantidade em estoque</div>
+                <div matListItemLine>{{ selectedProduct.quantity }}</div>
             </mat-list-item>
             }
 
@@ -55,14 +72,6 @@
                 <div matListItemLine>
                     {{ selectedProduct.isActive ? 'Sim' : 'Não' }}
                 </div>
-            </mat-list-item>
-            }
-
-            @if (selectedProduct.quantity) {
-            <mat-list-item>
-                <mat-icon matListItemIcon>notes</mat-icon>
-                <div matListItemTitle>Quantidade em estoque</div>
-                <div matListItemLine>{{ selectedProduct.quantity }}</div>
             </mat-list-item>
             }
 

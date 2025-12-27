@@ -11,6 +11,7 @@ import { Client } from '../../../../interfaces/client.interface';
 import { C } from '@angular/cdk/keycodes';
 import { NotificationService } from '../../../../services/notification.service';
 import { DialogService } from '../../../../services/dialog.service';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-client-details-component',
@@ -21,7 +22,8 @@ import { DialogService } from '../../../../services/dialog.service';
     MatButtonModule,
     DatePipe,
     RouterLink,
-    EditClientComponent
+    EditClientComponent,
+    NgxMaskPipe
   ],
   templateUrl: './client-details-component.html',
   styleUrl: './client-details-component.scss',

@@ -21,7 +21,7 @@
     <mat-card appearance="outlined">
         <mat-card-content>
             <app-product-table-component 
-                [productList]="productList"
+                [productList]="filteredProductList"
                 (deleteProduct)="deleteProduct($event)"
             />
         </mat-card-content>

@@ -1,0 +1,45 @@
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Aplicar filtros</mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="filterForm" class="filters-row">
+      
+      <mat-form-field appearance="outline" class="dense">
+        <mat-label>Estoque</mat-label>
+        <mat-select formControlName="stockRange">
+          <mat-option [value]="null">Todos</mat-option>
+          <mat-option value="none">Sem estoque</mat-option>
+          <mat-option value="0-10">0 até 10</mat-option>
+          <mat-option value="10-20">10 até 20</mat-option>
+          <mat-option value="20-30">20 até 30</mat-option>
+          <mat-option value="30+">+30</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="dense">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="type">
+          <mat-option [value]="null">Todos</mat-option>
+          <mat-option value="product">Produto</mat-option>
+          <mat-option value="service">Serviço</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="dense">
+        <mat-label>Ativo</mat-label>
+        <mat-select formControlName="isActive">
+          <mat-option [value]="null">Todos</mat-option>
+          <mat-option [value]="true">Sim</mat-option>
+          <mat-option [value]="false">Não</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-icon-button type="button" aria-label="Limpar filtros" matTooltip="Limpar filtros"
+        (click)="clearFilters()" class="clear-button">
+        <mat-icon>clear</mat-icon>
+      </button>
+
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

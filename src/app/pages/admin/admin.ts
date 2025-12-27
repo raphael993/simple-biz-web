@@ -68,4 +68,15 @@ export class AdminComponent {
 
     this.router.navigate(['/']);
   }
+
+  async resetDb() {
+    if (!confirm('Isso irá remover todos os dados atuais. Deseja continuar?')) {
+      return;
+    }
+    await this.indexedDb.resetDb();
+
+    this.snackBar.open('Banco de dados resetado com sucesso', 'OK', {
+      duration: 3000
+    });
+  }
 }

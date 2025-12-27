@@ -18,13 +18,23 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Preço de compra (R$)</mat-label>
-        <input matInput type="number" formControlName="costPrice">
+        <mat-label>Preço de compra</mat-label>
+        <input 
+            matInput
+            type="text"
+            currencyMask
+            formControlName="costPrice"
+        >
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Preço de venda (R$)</mat-label>
-        <input matInput type="number" formControlName="price">
+        <mat-label>Preço de venda</mat-label>
+        <input 
+            matInput
+            type="text"
+            currencyMask
+            formControlName="price"
+        >
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">

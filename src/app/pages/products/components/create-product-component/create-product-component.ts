@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Product } from '../../../../interfaces/product.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgxCurrencyDirective } from 'ngx-currency';
 
 @Component({
   selector: 'app-create-product-component',
@@ -17,7 +18,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDatepickerModule,
     MatButtonModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgxCurrencyDirective
   ],
   templateUrl: './create-product-component.html',
   styleUrl: './create-product-component.scss',
@@ -28,9 +30,17 @@ export class CreateProductComponent {
   public createProduct = output<Product>();
 
   public productForm!: FormGroup;
+  public isProduct = signal<boolean>(true);
 
   public ngOnInit(): void {
     this.createForm();
+    this.subscribeTochangeType();
+  }
+
+  public subscribeTochangeType() {
+    this.productForm.get('type')?.valueChanges.subscribe((data: any) => {
+      this.isProduct.set(data === 'product');
+    })
   }
 
   private createForm(): void {
@@ -42,7 +52,7 @@ export class CreateProductComponent {
       price: [null, [Validators.required]],
       type: ['product', [Validators.required]],
       isActive: [true, [Validators.required]],
-      quantity: [0, [Validators.required]],
+      quantity: [null],
       createAt: [new Date()],
     });
   }

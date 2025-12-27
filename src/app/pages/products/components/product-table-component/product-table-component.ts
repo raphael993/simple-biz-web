@@ -12,6 +12,8 @@ import { ProductService } from '../../../../services/product.service';
 import { Router } from '@angular/router';
 import { DialogService } from '../../../../services/dialog.service';
 import { UtilsService } from '../../../../services/utils.service';
+import { CurrencyPipe } from '@angular/common';
+import { ProductFilterComponent } from '../product-filter-component/product-filter-component';
 
 @Component({
   selector: 'app-product-table-component',
@@ -24,6 +26,8 @@ import { UtilsService } from '../../../../services/utils.service';
     MatCardModule,
     MatPaginatorModule,
     MatMenuModule,
+    CurrencyPipe,
+    ProductFilterComponent,
 ],
   templateUrl: './product-table-component.html',
   styleUrl: './product-table-component.scss',

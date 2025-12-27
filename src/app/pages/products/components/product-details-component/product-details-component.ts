@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -20,7 +20,8 @@ import { Product } from '../../../../interfaces/product.interface';
     MatButtonModule,
     DatePipe,
     RouterLink,
-    EditProductComponent
+    EditProductComponent,
+    CurrencyPipe
   ],
   templateUrl: './product-details-component.html',
   styleUrl: './product-details-component.scss',
