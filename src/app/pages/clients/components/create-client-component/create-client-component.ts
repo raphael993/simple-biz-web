@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-create-client-component',
@@ -13,7 +14,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatButtonModule
+    MatButtonModule,
+    NgxMaskDirective
   ],
   templateUrl: './create-client-component.html',
   styleUrl: './create-client-component.scss',
@@ -31,6 +33,7 @@ export class CreateClientComponent implements OnInit {
 
   private createForm(): void {
     this.clientForm = this.fb.group({
+      id: [crypto.randomUUID()],
       name: [null, [Validators.required, Validators.minLength(3)]],
       email: [null, [Validators.email]],
       phoneNumber: [null],
@@ -38,7 +41,7 @@ export class CreateClientComponent implements OnInit {
       address: [null],
       bithDate: [null],
       notes: [null],
-      createAt: [null]
+      createAt: [new Date()]
     });
   }
 

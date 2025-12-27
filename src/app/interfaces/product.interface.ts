@@ -11,3 +11,10 @@ export interface Product {
     createAt: Date;
     quantity: number;
 }
+
+export interface FilterProduct {
+    stockRange?: string;
+    type?: string;
+    isActive?: boolean;
+    clear?: boolean;
+}

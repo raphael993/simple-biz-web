@@ -1,0 +1,107 @@
+@if (showEditProduct()) {
+<mat-card class="product-view">
+    <mat-card-header>
+        <mat-card-title>Editar Produto</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <app-edit-product-component 
+        (cancel)="toggleShowEditProduct()"
+        (save)="saveProduct($event)"
+      />
+    </mat-card-content>
+</mat-card>
+}
+@if (!showEditProduct() && selectedProduct(); as selectedProduct) {
+<mat-card class="product-view">
+    <mat-card-header>
+        <mat-icon matListItemIcon color="primary">payments</mat-icon>
+        <mat-card-title>{{ selectedProduct.name }}</mat-card-title>
+
+        @if (selectedProduct.description) {
+        <mat-card-subtitle>{{ selectedProduct.description }}</mat-card-subtitle>
+        }
+    </mat-card-header>
+
+    <mat-card-content>
+        <mat-list>
+            @if (selectedProduct.type) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>shopping_cart</mat-icon>
+                <div matListItemTitle>Tipo</div>
+                <div matListItemLine>{{ selectedProduct.type === 'product' ? 'Produto' : 'Serviço' }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.costPrice) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>payments</mat-icon>
+                <div matListItemTitle>Preço de custo</div>
+                <div matListItemLine>{{ selectedProduct.costPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.price) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>payments</mat-icon>
+                <div matListItemTitle>Preço de venda</div>
+                <div matListItemLine>{{ selectedProduct.price | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.costPrice && selectedProduct.price) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>payments</mat-icon>
+                <div matListItemTitle>Lucro</div>
+                <div matListItemLine>Por unidade: {{ (selectedProduct.price - selectedProduct.costPrice) | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+                <div matListItemLine>Total em estoque {{ (selectedProduct.price - selectedProduct.costPrice * selectedProduct.quantity) | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.quantity) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>notes</mat-icon>
+                <div matListItemTitle>Quantidade em estoque</div>
+                <div matListItemLine>{{ selectedProduct.quantity }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.isActive !== null) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>check_circle</mat-icon>
+                <div matListItemTitle>Ativo</div>
+                <div matListItemLine>
+                    {{ selectedProduct.isActive ? 'Sim' : 'Não' }}
+                </div>
+            </mat-list-item>
+            }
+
+            @if (selectedProduct.createAt) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>event</mat-icon>
+                <div matListItemTitle>Criado em</div>
+                <div matListItemLine>
+                    {{ selectedProduct.createAt | date:'dd/MM/yyyy HH:mm' }}
+                </div>
+            </mat-list-item>
+            }
+        </mat-list>
+    </mat-card-content>
+
+    <mat-card-actions class="actions">
+        <button mat-stroked-button type="button" [routerLink]="['../']">
+            <mat-icon>arrow_back</mat-icon>
+            Voltar
+        </button>
+
+        <button mat-stroked-button color="primary" type="button" (click)="toggleShowEditProduct()">
+            <mat-icon>edit</mat-icon>
+            Editar
+        </button>
+
+        <button mat-raised-button color="warn" type="button" (click)="confirmDeletion()">
+            <mat-icon>delete</mat-icon>
+            Excluir
+        </button>
+    </mat-card-actions>
+</mat-card>
+}

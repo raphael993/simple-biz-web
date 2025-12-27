@@ -1,11 +1,14 @@
 <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Buscar cliente</mat-label>
+    <mat-label>Buscar produto</mat-label>
     <input type="text" matInput (keyup)="search($event)">
     <mat-icon matSuffix>search</mat-icon>
 </mat-form-field>
 
+<app-product-filter-component />
+
+
 @if (!dataSource.data.length) {
-<p>Nenhum cliente cadastrado.</p>
+<p>Nenhum produto cadastrado.</p>
 } @else {
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="Nome">
@@ -13,23 +16,31 @@
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
-    <ng-container matColumnDef="Telefone">
-        <th mat-header-cell *matHeaderCellDef> Telefone </th>
-        <td mat-cell *matCellDef="let element"> {{element.phoneNumber | mask: '(00) 00000-0000'}} </td>
+    <ng-container matColumnDef="Preço">
+        <th mat-header-cell *matHeaderCellDef> Preço </th>
+        <td mat-cell *matCellDef="let element">{{ element.price | currency:'BRL':'symbol':'1.2-2':'pt-BR'}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="E-mail">
-        <th mat-header-cell *matHeaderCellDef> E-mail </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    <ng-container matColumnDef="Estoque">
+        <th mat-header-cell *matHeaderCellDef> Estoque </th>
+        <td mat-cell *matCellDef="let element" [class]="element.quantity === 0 ? 'inactive' : ''"> {{element.quantity}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Tipo">
+        <th mat-header-cell *matHeaderCellDef> Tipo </th>
+        <td mat-cell *matCellDef="let element"> {{element.type === 'product' ? 'Produto' : 'Serviço'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Ativo">
+        <th mat-header-cell *matHeaderCellDef> Ativo </th>
+        <td mat-cell *matCellDef="let element" [class]="!element.isActive ? 'inactive' : ''"> {{element.isActive ? 'Sim' : 'Não'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Ações">
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let element" class="actions">
             <mat-icon class="eye" aria-hidden="false" aria-label="visibility" fontIcon="visibility"
-                (click)="showClientDetailsAction(element)" />
+                (click)="showProductDetailsAction(element)" />
             <mat-icon class="delete" aria-hidden="false" aria-label="Example home icon" fontIcon="delete"
                 (click)="confirmDeletion(element)" />
         </td>
@@ -44,7 +55,7 @@
             </button>
 
             <mat-menu #actionsMenu="matMenu">
-                <button mat-menu-item (click)="showClientDetailsAction(element)">
+                <button mat-menu-item (click)="showProductDetailsAction(element)">
                     <mat-icon>visibility</mat-icon>
                     <span>Visualizar</span>
                 </button>

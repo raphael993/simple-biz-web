@@ -1,0 +1,26 @@
+:host {
+    .full-width {
+        width: 50%;
+    }
+    
+    .actions {
+        cursor: pointer;
+        .eye {
+            color: #515ff1
+        }
+        .delete {
+            color: #ef5630
+        }
+    }
+
+    .inactive {
+        color: #ef5630
+    }
+
+
+    @media (max-width: 768px) {
+        .full-width {
+            width: 100%;
+        }
+    }
+}

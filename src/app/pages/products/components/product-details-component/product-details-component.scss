@@ -1,0 +1,30 @@
+:host {
+    .product-view {
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .avatar {
+        background-color: #3f51b5;
+        color: #fff;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+    }
+
+    mat-list-item {
+        cursor: pointer;
+    }
+
+    mat-list-item:hover {
+        background: rgba(0, 0, 0, 0.04);
+    }
+}

@@ -12,6 +12,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { UtilsService } from '../../../../services/utils.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { DialogService } from '../../../../services/dialog.service';
+import { NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-client-table-component',
@@ -24,6 +25,7 @@ import { DialogService } from '../../../../services/dialog.service';
     MatCardModule,
     MatPaginatorModule,
     MatMenuModule,
+    NgxMaskPipe
   ],
   templateUrl: './client-table-component.html',
   styleUrl: './client-table-component.scss',
@@ -41,7 +43,7 @@ export class ClientTableComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['id', 'Nome', 'Telefone', 'E-mail', 'Ações'];
+  displayedColumns: string[] = ['Nome', 'Telefone', 'E-mail', 'Ações'];
 
   constructor() {
     effect(() => {
