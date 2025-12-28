@@ -1,1 +1,26 @@
-<p>sales works!</p>
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>Vender</mat-card-title>
+        <mat-card-subtitle>Adicione um cliente existente, ou realize um venda anônima</mat-card-subtitle>
+    </mat-card-header>
+</mat-card>
+
+<app-select-client-component [clients]="clients" (clientSelected)="onClientSelected($event)" />
+
+<div class="cards-container">
+    <mat-card class="card">
+        <app-product-showcase-component
+            [products]="products"
+        ></app-product-showcase-component>
+    </mat-card>
+
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>
+                <mat-icon>shopping_cart</mat-icon>
+                Carrinho de compras
+            </mat-card-title>
+        </mat-card-header>
+        <app-shopping-cart-component (finishSale)="onFinishSale()" />
+    </mat-card>
+</div>

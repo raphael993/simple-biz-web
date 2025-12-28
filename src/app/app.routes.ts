@@ -8,7 +8,7 @@ import { AdminComponent } from './pages/admin/admin';
 import { ProductDetailsComponent } from './pages/products/components/product-details-component/product-details-component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: '', component: SalesComponent },
     { 
         path: 'clients',
         children: [

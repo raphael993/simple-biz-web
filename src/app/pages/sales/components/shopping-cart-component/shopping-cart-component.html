@@ -1,0 +1,55 @@
+<div class="cart-container">
+  @if (cartItems().length === 0) {
+    <div class="empty-cart">
+      Carrinho vazio...
+    </div>
+  } @else {
+
+    <mat-list>
+      @for (item of cartItems(); track item.product.id) {
+        <mat-list-item>
+          <div class="cart-row">
+
+            <div class="info">
+              <div class="name">{{ item.product.name }}</div>
+
+              <div class="details">
+                <span>Qtd: {{ item.quantity }}</span>
+                <span>Unit: {{ item.product.price | currency:'BRL' }}</span>
+                <span class="subtotal">
+                  {{ item.product.price * item.quantity | currency:'BRL' }}
+                </span>
+              </div>
+            </div>
+
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="confirmDeletion(item)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+
+          </div>
+        </mat-list-item>
+      }
+    </mat-list>
+
+    <div class="cart-footer">
+      <div class="total">
+        Total:
+        <strong>{{ total() | currency:'BRL' }}</strong>
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="finish-button"
+        (click)="finalizePurchase()"
+      >
+        Finalizar compra
+      </button>
+    </div>
+
+  }
+</div>

@@ -1,0 +1,15 @@
+.cards-container {
+  display: flex;
+  gap: 16px;
+}
+
+.card {
+  flex: 1;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+  }
+}

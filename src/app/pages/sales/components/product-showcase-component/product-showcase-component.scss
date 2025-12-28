@@ -1,0 +1,70 @@
+.product-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* mantém input e botão fixos */
+.full-width {
+  width: 100%;
+}
+
+/* 🔽 área com scroll */
+mat-list {
+  max-height: 320px;       /* ajuste conforme o layout */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* melhora UX do scroll */
+mat-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+mat-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+mat-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.product-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-weight: 500;
+}
+
+.description {
+  font-size: 12px;
+  color: #666;
+}
+
+.price {
+  font-weight: 600;
+}
+
+.selected {
+  background-color: rgba(63, 81, 181, 0.08);
+  border-radius: 4px;
+}
+
+.empty {
+  font-style: italic;
+  color: #999;
+}
+
+.add-button {
+  margin-top: 8px;
+}

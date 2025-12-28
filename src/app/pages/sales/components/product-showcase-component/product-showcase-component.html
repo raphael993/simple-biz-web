@@ -1,0 +1,56 @@
+<div class="product-list-container">
+
+  <!-- 🔍 Busca -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Buscar produto</mat-label>
+    <input
+      matInput
+      [formControl]="searchControl"
+      placeholder="Digite o nome do produto"
+    />
+  </mat-form-field>
+
+  <!-- 📋 Lista -->
+  <mat-list>
+    @for (product of filteredProducts(); track product.id) {
+      <mat-list-item
+        (click)="selectProduct(product)"
+        [class.selected]="isSelected(product)"
+      >
+        <div class="product-row">
+          <div class="info">
+            <div class="name">{{ product.name }}
+            @if (product.quantity) {
+              <small>(Qt: {{ product.quantity }})</small>
+            }</div>
+            @if (product.description) {
+              <div class="description">{{ product.description }}</div>
+            }
+          </div>
+
+          <div class="price">
+            {{ product.price | currency:'BRL' }}
+          </div>
+        </div>
+      </mat-list-item>
+    }
+
+    @if (filteredProducts().length === 0) {
+      <mat-list-item>
+        <span class="empty">Nenhum produto encontrado</span>
+      </mat-list-item>
+    }
+  </mat-list>
+
+  <!-- 🛒 Ação -->
+  <button
+    mat-raised-button
+    color="primary"
+    class="full-width add-button"
+    [disabled]="!selectedProduct()"
+    (click)="addToCart()"
+  >
+    Adicionar ao carrinho
+  </button>
+
+</div>
