@@ -1,0 +1,96 @@
+.receipt {
+  max-width: 420px;
+  margin: 24px auto;
+  padding: 16px;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.receipt-header {
+  text-align: center;
+
+  h2 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .subtitle {
+    font-size: 12px;
+    color: #666;
+  }
+}
+
+.items {
+  margin: 16px 0;
+
+  .item {
+    display: grid;
+    grid-template-columns: 1fr 50px 90px;
+    gap: 8px;
+    padding: 6px 0;
+    font-size: 14px;
+
+    &.header {
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    .qty {
+      text-align: center;
+    }
+
+    .price {
+      text-align: right;
+    }
+  }
+}
+
+.discount {
+  margin: 12px 0;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.summary {
+  margin-top: 12px;
+  font-size: 14px;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+  }
+
+  .discount-row {
+    color: #c62828;
+  }
+
+  .total {
+    margin-top: 8px;
+    font-size: 16px;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+
+  button {
+    flex: 1;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}
+
+@media print {
+  .actions,
+  .discount {
+    display: none !important;
+  }
+}

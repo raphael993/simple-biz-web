@@ -1,0 +1,12 @@
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <mat-card-title>Histórico de vendas</mat-card-title>
+    </mat-card-header>
+</mat-card>
+<br>
+
+<mat-card appearance="outlined">
+    <mat-card-content>
+        <app-sales-history-table-component [salesList]="filteredSalesList" />
+    </mat-card-content>
+</mat-card>

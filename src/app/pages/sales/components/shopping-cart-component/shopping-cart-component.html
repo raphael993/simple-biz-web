@@ -27,7 +27,7 @@
               color="warn"
               (click)="confirmDeletion(item)"
             >
-              <mat-icon>delete</mat-icon>
+              <mat-icon>{{ item.quantity > 1 ? 'remove' : 'delete' }}</mat-icon>
             </button>
 
           </div>
@@ -45,9 +45,9 @@
         mat-raised-button
         color="primary"
         class="finish-button"
-        (click)="finalizePurchase()"
+        (click)="goToCheckout()"
       >
-        Finalizar compra
+        Ir para o checkout
       </button>
     </div>
 

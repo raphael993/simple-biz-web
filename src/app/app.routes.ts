@@ -6,6 +6,8 @@ import { ProductsComponent } from './pages/products/products';
 import { ClientDetailsComponent } from './pages/clients/components/client-details-component/client-details-component';
 import { AdminComponent } from './pages/admin/admin';
 import { ProductDetailsComponent } from './pages/products/components/product-details-component/product-details-component';
+import { CheckoutComponent } from './pages/sales/components/checkout-component/checkout-component';
+import { HistoryComponent } from './pages/history/history';
 
 export const routes: Routes = [
     { path: '', component: SalesComponent },
@@ -23,6 +25,13 @@ export const routes: Routes = [
             { path: 'details', component: ProductDetailsComponent }
         ]
     },
-    { path: 'sales', component: SalesComponent },
+    { 
+        path: 'sales',
+        children: [
+            { path: '', component: SalesComponent },
+            { path: 'checkout', component: CheckoutComponent }
+        ]
+    },
+    { path: 'history', component: HistoryComponent },
     { path: 'admin', component: AdminComponent },
 ];

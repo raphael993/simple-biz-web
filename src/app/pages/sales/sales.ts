@@ -51,8 +51,4 @@ export class SalesComponent implements OnInit {
       this.products = data;
     });
   }
-
-  onFinishSale() {
-    console.log('Finalizar compra');
-  }
 }

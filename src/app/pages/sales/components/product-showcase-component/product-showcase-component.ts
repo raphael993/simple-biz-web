@@ -8,7 +8,6 @@ import { MatListModule } from '@angular/material/list';
 import { Product } from '../../../../interfaces/product.interface';
 import { debounceTime, startWith } from 'rxjs';
 import { NotificationService } from '../../../../services/notification.service';
-import { ProductService } from '../../../../services/product.service';
 import { SaleService } from '../../../../services/sale.service';
 
 @Component({

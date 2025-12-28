@@ -1,0 +1,28 @@
+.payment {
+  margin-top: 16px;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.list {
+  margin-top: 16px;
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px dashed #ccc;
+  }
+}

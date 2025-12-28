@@ -18,3 +18,8 @@ export interface FilterProduct {
     isActive?: boolean;
     clear?: boolean;
 }
+
+export interface CartItem {
+  product: Product;
+  quantity: number;
+}

@@ -1,0 +1,80 @@
+@if (!paymentStep()) {
+<mat-card class="receipt" #receipt>
+    <header class="receipt-header">
+        <h2>Checkout</h2>
+        <span class="subtitle">Resumo da compra</span>
+    </header>
+
+    <mat-divider />
+
+    <section class="items">
+        <div class="item header">
+            <span>Produto</span>
+            <span>Qtd</span>
+            <span>Valor</span>
+        </div>
+
+        @for (item of cartItems(); track item.product.id) {
+        <div class="item">
+            <span class="name">{{ item.product.name }}</span>
+            <span class="qty">{{ item.quantity }}</span>
+            <span class="price">
+                {{ item.product.price * item.quantity | currency:'BRL' }}
+            </span>
+        </div>
+        }
+    </section>
+
+    <mat-divider />
+
+    <section class="discount">
+        <mat-form-field appearance="outline">
+            <mat-label>Desconto (%)</mat-label>
+            <input matInput type="number" min="0" max="100" [value]="discountPercent()"
+                (input)="onDiscountChange($any($event.target).value)" />
+        </mat-form-field>
+    </section>
+
+    <mat-divider />
+
+    <section class="summary">
+        <div class="row">
+            <span>Subtotal</span>
+            <span>{{ subtotal() | currency:'BRL' }}</span>
+        </div>
+
+        @if (discountPercent() > 0) {
+        <div class="row discount-row">
+            <span>Desconto ({{ discountPercent() }}%)</span>
+            <span>- {{ discountValue() | currency:'BRL' }}</span>
+        </div>
+        }
+
+        <div class="row total">
+            <strong>Total</strong>
+            <strong>{{ total() | currency:'BRL' }}</strong>
+        </div>
+    </section>
+
+    <mat-divider />
+
+    <section class="actions">
+        <button mat-stroked-button type="button" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+            Voltar
+        </button>
+
+        <button mat-stroked-button type="button" (click)="generatePdf()">
+            Gerar PDF
+        </button>
+    </section>
+
+    <section class="actions">
+        <button mat-flat-button color="primary" type="button" (click)="togglePaymentStep(true)">
+            Prosseguir para pagamento
+        </button>
+    </section>
+</mat-card>
+} @else {
+<app-payment-method [total]="total()" (pay)="onPayments($event)" (backToCheckout)="togglePaymentStep(false)" />
+}

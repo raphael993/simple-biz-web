@@ -4,13 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { SaleService } from '../../../../services/sale.service';
-import { Product } from '../../../../interfaces/product.interface';
 import { DialogService } from '../../../../services/dialog.service';
-
-interface CartItem {
-  product: Product;
-  quantity: number;
-}
+import { CartItem } from '../../../../interfaces/product.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart-component',
@@ -26,9 +22,7 @@ interface CartItem {
 export class ShoppingCartComponent {
   private saleService = inject(SaleService);
   private dialogService = inject(DialogService);
-
-  finishSale = output<void>();
-
+  private router = inject(Router);
   private rawCart = this.saleService.productCart;
 
   cartItems = signal<CartItem[]>([]);
@@ -40,7 +34,6 @@ export class ShoppingCartComponent {
   private groupCartItems() {
     effect(() => {
       const items = this.rawCart();
-
 
       const grouped = items.reduce((acc, product) => {
         const existing = acc.find(i => i.product.id === product.id);
@@ -66,6 +59,10 @@ export class ShoppingCartComponent {
   );
 
   confirmDeletion(item: CartItem): void {
+    if (item.quantity > 1) {
+      this.removeItem(item);
+      return;
+    }
     this.dialogService
       .showConfirmationDialog({ title: 'Excluir', message: `Tem certeza que deseja excluir o item \"${item.product.name}\" do carrinho?` })
       .subscribe(result => {
@@ -94,7 +91,13 @@ export class ShoppingCartComponent {
     
   }
 
-  finalizePurchase() {
-    this.finishSale.emit();
+  goToCheckout() {
+    const checkout = this.cartItems();
+    if (!checkout.length) {
+      return;
+    }
+
+    this.saleService.checkoutData.set(checkout);
+    this.router.navigate(['sales/checkout']);
   }
 }

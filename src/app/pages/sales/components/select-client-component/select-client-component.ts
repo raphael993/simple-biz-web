@@ -22,7 +22,6 @@ import { ClientService } from '../../../../services/client.service';
 })
 export class SelectClientComponent {
   clients = input<Client[]>([]);
-  clientSelected = output<Client | null>();
   clientService = inject(ClientService);
 
   clientControl = new FormControl<string | Client>('');
@@ -50,12 +49,10 @@ export class SelectClientComponent {
 
   onClientSelected(client: Client): void {
     this.clientService.selectedClient.set(client);
-    this.clientSelected.emit(client);
   }
 
   changeClient(): void {
     this.clientService.selectedClient.set(null);
     this.clientControl.reset('');
-    this.clientSelected.emit(null);
   }
 }
