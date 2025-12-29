@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "buildProduction": "ng build --configuration production",
+    "servePwa": "npx http-server dist/simple-biz-web/browser --spa"
   },
   "prettier": {
     "printWidth": 100,
