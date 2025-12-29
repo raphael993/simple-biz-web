@@ -2,13 +2,14 @@
     <mat-label>Buscar produto</mat-label>
     <input type="text" matInput (keyup)="search($event)">
     <mat-icon matSuffix>search</mat-icon>
+    <mat-hint>Procure pelo nome do produto / serviço ou preço</mat-hint>
 </mat-form-field>
 
 <app-product-filter-component />
 
 
 @if (!dataSource.data.length) {
-<p>Nenhum produto cadastrado.</p>
+<p>Nenhum produto cadastrado</p>
 } @else {
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="Nome">

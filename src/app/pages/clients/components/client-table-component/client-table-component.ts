@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, inject, input, output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, input, OnDestroy, output, ViewChild } from '@angular/core';
 import { Client } from '../../../../interfaces/client.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -30,7 +30,7 @@ import { NgxMaskPipe } from 'ngx-mask';
   templateUrl: './client-table-component.html',
   styleUrl: './client-table-component.scss',
 })
-export class ClientTableComponent implements AfterViewInit {
+export class ClientTableComponent implements AfterViewInit, OnDestroy {
   public clientList = input<Array<Client>>([]);
   public dataSource = new MatTableDataSource<Client>();
   
@@ -84,5 +84,9 @@ export class ClientTableComponent implements AfterViewInit {
   public showClientDetailsAction(client: Client) {
     this.clientService.selectedClient.set(client);
     this.router.navigate(['clients', 'details']);
+  }
+
+  ngOnDestroy() {
+    this.dataSource.paginator = null!;
   }
 }

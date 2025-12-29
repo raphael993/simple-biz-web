@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, effect, inject, input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, input, OnDestroy, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -31,7 +31,7 @@ import { UtilsService } from '../../../../services/utils.service';
   templateUrl: './sales-history-table-component.html',
   styleUrl: './sales-history-table-component.scss',
 })
-export class SalesHistoryTableComponent {
+export class SalesHistoryTableComponent implements AfterViewInit, OnDestroy {
   public salesList = input<Array<Sale>>([]);
   public dataSource = new MatTableDataSource<Sale>();
 
@@ -69,8 +69,12 @@ export class SalesHistoryTableComponent {
     this.dataSource.filter = value;
   }
 
-  public showProductDetailsAction(sale: Sale) {
-    /* this.saleService.selectedProduct.set(product);
-    this.router.navigate(['products', 'details']); */
+  public showSaleDetailsAction(sale: Sale) {
+    this.saleService.selectedSale.set(sale);
+    this.router.navigate(['history', 'details']);
+  }
+
+  ngOnDestroy() {
+    this.dataSource.paginator = null!;
   }
 }

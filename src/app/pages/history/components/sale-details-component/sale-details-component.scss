@@ -1,0 +1,74 @@
+.sale-view {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* Conteúdo do card */
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Títulos de seção */
+.section-title {
+  margin: 8px 0 4px;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* ===== FIX CRÍTICO: MULTILINHAS ===== */
+mat-list-item {
+  height: auto !important;
+  align-items: flex-start;
+}
+
+/* Permite quebra correta de texto */
+.mat-mdc-list-item-title,
+.mat-mdc-list-item-line {
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+/* Destaque para valor total */
+mat-list-item strong {
+  font-size: 18px;
+}
+
+/* Observações */
+.notes {
+  padding: 12px 16px;
+  border-left: 4px solid var(--mat-sys-primary);
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Ações */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+}
+
+.cash {
+  color: rgb(14, 202, 14)
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+  .sale-view {
+    margin: 8px;
+  }
+
+  .section-title {
+    font-size: 15px;
+  }
+
+  mat-list-item {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}

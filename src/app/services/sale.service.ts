@@ -9,10 +9,10 @@ import { SaleStorageService } from "../storage/sale-storage.service";
 })
 export class SaleService {
   public addToProductCart = signal<Product | null>(null);
-  public removeFromProductCart = signal<Product | null>(null);
+  public removeFromProductCart = signal<Product[]>([]);
   public productCart = signal<Product[]>([]);
   public checkoutData = signal<CartItem[]>([]);
-
+  public selectedSale = signal<Sale | null>(null);
   private saleStorageService = inject(SaleStorageService);
 
   public getSalesList(): Observable<Sale[]> {
@@ -21,5 +21,9 @@ export class SaleService {
 
   public createSale(payload: Sale): Observable<void> {
     return from(this.saleStorageService.create(payload));
+  }
+
+  public getSalesByClientId(clientId: string): Observable<Sale[]> {
+    return from(this.saleStorageService.getSalesByClientId(clientId));
   }
 }

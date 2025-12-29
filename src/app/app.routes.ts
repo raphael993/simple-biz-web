@@ -8,6 +8,7 @@ import { AdminComponent } from './pages/admin/admin';
 import { ProductDetailsComponent } from './pages/products/components/product-details-component/product-details-component';
 import { CheckoutComponent } from './pages/sales/components/checkout-component/checkout-component';
 import { HistoryComponent } from './pages/history/history';
+import { SaleDetailsComponent } from './pages/history/components/sale-details-component/sale-details-component';
 
 export const routes: Routes = [
     { path: '', component: SalesComponent },
@@ -15,7 +16,13 @@ export const routes: Routes = [
         path: 'clients',
         children: [
             { path: '', component: ClientsComponent },
-            { path: 'details', component: ClientDetailsComponent }
+            { 
+                path: 'details',
+                children: [
+                    { path: '', component: ClientDetailsComponent },
+                    { path: 'sale-details', component: SaleDetailsComponent }
+                ]
+            },
         ]
     },
     { 
@@ -32,6 +39,12 @@ export const routes: Routes = [
             { path: 'checkout', component: CheckoutComponent }
         ]
     },
-    { path: 'history', component: HistoryComponent },
+    { 
+        path: 'history',
+        children: [
+            { path: '', component: HistoryComponent },
+            { path: 'details', component: SaleDetailsComponent }
+        ]
+    },
     { path: 'admin', component: AdminComponent },
 ];

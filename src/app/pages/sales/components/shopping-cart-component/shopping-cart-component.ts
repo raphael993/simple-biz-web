@@ -74,7 +74,7 @@ export class ShoppingCartComponent {
   }
 
   private removeItem(item: CartItem) {
-    this.saleService.removeFromProductCart.set({...item.product});
+    this.saleService.removeFromProductCart.set([{...item.product}]);
     if (item.quantity > 1) {
       const index = this.rawCart().findIndex(p => p.id === item.product.id);
       const tmp = this.rawCart();
@@ -99,5 +99,9 @@ export class ShoppingCartComponent {
 
     this.saleService.checkoutData.set(checkout);
     this.router.navigate(['sales/checkout']);
+  }
+
+  ngOnDestroy() {
+    this.cartItems.set([])
   }
 }

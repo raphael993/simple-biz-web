@@ -13,6 +13,7 @@ import { ClientService } from '../../../../services/client.service';
 import { Sale } from '../../../../interfaces/sale.interface';
 import { DialogService } from '../../../../services/dialog.service';
 import { NotificationService } from '../../../../services/notification.service';
+import { CartItem, Product } from '../../../../interfaces/product.interface';
 
 @Component({
   selector: 'app-checkout-component',
@@ -40,6 +41,7 @@ export class CheckoutComponent {
   discountPercent = signal<number>(0);
   paymentStep = signal<boolean>(false);
   paymentsList = signal<Payment[]>([]);
+  notes: string | null = null;
 
   subtotal = computed(() =>
     this.cartItems().reduce(
@@ -104,15 +106,30 @@ export class CheckoutComponent {
       discountValue: this.discountValue(),
       subtotal: this.subtotal(),
       total: this.total(),
+      profit: this.profitCalc(this.cartItems(), this.total()) - (this.discountValue()),
       paymentsList: this.paymentsList(),
-      createAt: new Date()
+      createAt: new Date(),
+      notes: this.notes
     }
 
     this.saleService.createSale(sale).subscribe(() => {
       this.notificationService.openNotification('Venda realizada com sucesso!');
-      // deve limpar venda dos signals
+      this.clearState();
       this.router.navigate(['/']);
     });
+  }
+
+  clearState() {
+    this.clientService.selectedClient.set(null);
+    this.saleService.productCart.set([]);
+    this.saleService.checkoutData.set([]);
+  }
+
+  profitCalc(cartItems: CartItem[], total: number) {
+    return cartItems.reduce(
+      (sum, item) => sum + item.product.price - (item.product.costPrice ?? 0) ,
+      0
+    )
   }
 
 }

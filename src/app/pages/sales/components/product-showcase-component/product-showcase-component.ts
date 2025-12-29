@@ -9,6 +9,7 @@ import { Product } from '../../../../interfaces/product.interface';
 import { debounceTime, startWith } from 'rxjs';
 import { NotificationService } from '../../../../services/notification.service';
 import { SaleService } from '../../../../services/sale.service';
+import { ProductType } from '../../../../enums/product-type.enum';
 
 @Component({
   selector: 'app-product-showcase-component',
@@ -33,17 +34,19 @@ export class ProductShowcaseComponent {
   notificationService = inject(NotificationService);
   saleService = inject(SaleService);
 
+  productType = ProductType;  
+
   constructor() {
     this.listenSearchChanges();
 
     effect(() => {
       const removedFromCart = this.saleService.removeFromProductCart();
 
-      if (!removedFromCart) {
+      if (!removedFromCart.length) {
         return;
       }
 
-      this.updateItemQuantity(removedFromCart, true);
+      this.updateItemQuantity(removedFromCart[0], true);
     })
   }
 
@@ -87,7 +90,7 @@ export class ProductShowcaseComponent {
   }
 
   removeNonListedItems(item: Product[]): Product[] {
-    return item.filter((item: Product) => item.isActive && item.quantity > 0);
+    return item.filter((item: Product) => item.isActive && (item.quantity > 0 || item.type === this.productType.SERVICE));
   }
 
   updateItemQuantity(product: Product, increase: boolean = true) {

@@ -2,10 +2,11 @@
     <mat-label>Buscar cliente</mat-label>
     <input type="text" matInput (keyup)="search($event)">
     <mat-icon matSuffix>search</mat-icon>
+    <mat-hint>Procure pelo nome do cliente, telefone, e-mail, endereço ou documento</mat-hint>
 </mat-form-field>
 
 @if (!dataSource.data.length) {
-<p>Nenhum cliente cadastrado.</p>
+<p>Nenhum cliente cadastrado</p>
 } @else {
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="Nome">

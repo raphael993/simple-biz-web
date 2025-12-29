@@ -16,7 +16,7 @@ import { ProductService } from '../../../../services/product.service';
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
-    MatExpansionModule
+    MatExpansionModule,
   ],
   templateUrl: './product-filter-component.html',
   styleUrl: './product-filter-component.scss',

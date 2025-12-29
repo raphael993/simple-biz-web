@@ -12,7 +12,8 @@ export interface Sale {
     discountValue?: number;
     subtotal?: number;
     total: number;
+    profit?: number;
     paymentsList?: Payment[];
     createAt: Date,
-    notes?: string;
+    notes?: string | null;
 }

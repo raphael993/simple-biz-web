@@ -83,7 +83,7 @@
     </mat-card-content>
 
       <mat-card-actions class="actions">
-        <button mat-stroked-button type="button" [routerLink]="['../']">
+        <button mat-stroked-button type="button" (click)="goBack()">
           <mat-icon>arrow_back</mat-icon>
           Voltar
         </button>
@@ -116,45 +116,26 @@
 
     <mat-card-content>
 
-      <mat-list>
+      @if (!clientSales.length) {
+        <p>Nenhuma venda registrada para este cliente</p>
+      } @else {
+        <mat-list>
 
-        <mat-list-item>
+        @for (sale of clientSales; track $index) {
+          <mat-list-item (click)="onSelectSale(sale)">
           <mat-icon matListItemIcon>receipt_long</mat-icon>
 
           <div matListItemTitle>
-            15/08/2024 • 14:32
+            {{ sale.createAt | date:'dd/MM/yyyy HH:mm'}}
           </div>
 
           <div matListItemLine>
-            3 itens • <strong class="cash">R$ 120,00</strong>
+            {{ sale.cartItems.length === 1 ? `${sale.cartItems.length} item` : `${sale.cartItems.length} itens` }} • <strong class="cash">{{ sale.total | currency:'BRL' }}</strong>
           </div>
         </mat-list-item>
-
-        <mat-list-item>
-          <mat-icon matListItemIcon>receipt_long</mat-icon>
-
-          <div matListItemTitle>
-            02/07/2024 • 10:15
-          </div>
-
-          <div matListItemLine>
-            1 item • <strong class="cash">R$ 45,90</strong>
-          </div>
-        </mat-list-item>
-
-        <mat-list-item>
-          <mat-icon matListItemIcon>receipt_long</mat-icon>
-
-          <div matListItemTitle>
-            18/06/2024 • 18:47
-          </div>
-
-          <div matListItemLine>
-            5 itens • <strong class="cash">R$ 389,00</strong>
-          </div>
-        </mat-list-item>
-
+        }
       </mat-list>
+      }
 
     </mat-card-content>
   </mat-card>

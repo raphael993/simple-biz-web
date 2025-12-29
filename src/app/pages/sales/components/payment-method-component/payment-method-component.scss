@@ -26,3 +26,17 @@
     border-bottom: 1px dashed #ccc;
   }
 }
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+
+  button {
+    flex: 1;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+}

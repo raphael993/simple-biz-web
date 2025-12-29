@@ -11,6 +11,10 @@ export class SaleStorageService {
     return this.db.getAll('sale');
   }
 
+  getSalesByClientId(clientId: string): Promise<Sale[]> {
+    return this.db.getSalesByClientId(clientId);
+  }
+
   async create(payload: Sale): Promise<void> {
     await this.db.add('sale', payload);
   }

@@ -1,0 +1,148 @@
+@if (selectedSale(); as selectedSale) {
+<mat-card class="sale-view">
+
+    <!-- Cabeçalho -->
+    <mat-card-header>
+        <mat-icon matListItemIcon color="primary">receipt_long</mat-icon>
+        <mat-card-title>
+            Venda registrada
+        </mat-card-title>
+
+        @if (selectedSale.clientName) {
+        <mat-card-subtitle>
+            Cliente: {{ selectedSale.clientName }}
+        </mat-card-subtitle>
+        }
+    </mat-card-header>
+
+    <!-- Conteúdo -->
+    <mat-card-content>
+
+        <!-- Informações gerais -->
+        <mat-list>
+
+            @if (selectedSale.sellerName) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>person</mat-icon>
+                <div matListItemTitle>Vendedor</div>
+                <div matListItemLine>{{ selectedSale.sellerName }}</div>
+            </mat-list-item>
+            }
+
+            @if (selectedSale.createAt) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>event</mat-icon>
+                <div matListItemTitle>Data da venda</div>
+                <div matListItemLine>
+                    {{ selectedSale.createAt | date:'dd/MM/yyyy HH:mm' }}
+                </div>
+            </mat-list-item>
+            }
+
+        </mat-list>
+
+        <!-- Itens da venda -->
+        <h3 class="section-title">Itens</h3>
+
+        <mat-list>
+            @for (item of selectedSale.cartItems; track $index) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>shopping_cart</mat-icon>
+
+                <div matListItemTitle>
+                    {{ item.product.name }}
+                </div>
+
+                <div matListItemLine>
+                    {{ item.quantity }} × {{ item.product.price | currency:'BRL' }}
+                </div>
+
+                <div matListItemLine>
+                    Total:
+                    {{ (item.product.price * item.quantity) | currency:'BRL' }}
+                </div>
+            </mat-list-item>
+            }
+        </mat-list>
+
+        <!-- Totais -->
+        <h3 class="section-title">Resumo financeiro</h3>
+
+        <mat-list>
+
+            @if (selectedSale.subtotal) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>payments</mat-icon>
+                <div matListItemTitle>Subtotal</div>
+                <div matListItemLine>
+                    {{ selectedSale.subtotal | currency:'BRL' }}
+                </div>
+            </mat-list-item>
+            }
+
+            @if (selectedSale.discountPercent) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>percent</mat-icon>
+                <div matListItemTitle>Desconto</div>
+                <div matListItemLine>
+                    {{ selectedSale.discountPercent }}%
+                    ({{ selectedSale.discountValue | currency:'BRL' }})
+                </div>
+            </mat-list-item>
+            }
+
+            <mat-list-item>
+                <mat-icon matListItemIcon color="primary">paid</mat-icon>
+                <div matListItemTitle>Total</div>
+                <div matListItemLine>
+                    <strong>{{ selectedSale.total | currency:'BRL' }} </strong>
+                    @if(selectedSale.profit) {
+                        <small>(Lucro obtido: <span class="cash">{{ (selectedSale.profit) | currency:'BRL'  }} </span>)</small>
+                    }
+                </div>
+            </mat-list-item>
+
+        </mat-list>
+
+        <!-- Pagamentos -->
+        @if (selectedSale.paymentsList?.length) {
+        <h3 class="section-title">Pagamentos</h3>
+
+        <mat-list>
+            @for (payment of selectedSale.paymentsList; track $index) {
+            <mat-list-item>
+                <mat-icon matListItemIcon>credit_card</mat-icon>
+
+                <div matListItemTitle>
+                    {{ payment.type | titlecase }}
+                </div>
+
+                <div matListItemLine>
+                    {{ payment.value | currency:'BRL' }}
+                </div>
+            </mat-list-item>
+            }
+        </mat-list>
+        }
+
+        <!-- Observações -->
+        @if (selectedSale.notes) {
+        <h3 class="section-title">Observações</h3>
+
+        <p class="notes">
+            {{ selectedSale.notes }}
+        </p>
+        }
+
+    </mat-card-content>
+
+    <!-- Ações -->
+    <mat-card-actions class="actions">
+        <button mat-stroked-button type="button" [routerLink]="['../']">
+            <mat-icon>arrow_back</mat-icon>
+            Voltar
+        </button>
+    </mat-card-actions>
+
+</mat-card>
+}

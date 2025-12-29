@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, input, OnDestroy, output, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,7 +32,7 @@ import { ProductFilterComponent } from '../product-filter-component/product-filt
   templateUrl: './product-table-component.html',
   styleUrl: './product-table-component.scss',
 })
-export class ProductTableComponent {
+export class ProductTableComponent implements AfterViewInit, OnDestroy {
   public productList = input<Array<Product>>([]);
   public dataSource = new MatTableDataSource<Product>();
   
@@ -86,5 +86,9 @@ export class ProductTableComponent {
   public showProductDetailsAction(product: Product) {
     this.productService.selectedProduct.set(product);
     this.router.navigate(['products', 'details']);
+  }
+
+  ngOnDestroy() {
+    this.dataSource.paginator = null!;
   }
 }

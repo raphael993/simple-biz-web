@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, Inject, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -12,6 +12,9 @@ import { C } from '@angular/cdk/keycodes';
 import { NotificationService } from '../../../../services/notification.service';
 import { DialogService } from '../../../../services/dialog.service';
 import { NgxMaskPipe } from 'ngx-mask';
+import { SaleService } from '../../../../services/sale.service';
+import { Sale } from '../../../../interfaces/sale.interface';
+import { CartItem, Product } from '../../../../interfaces/product.interface';
 
 @Component({
   selector: 'app-client-details-component',
@@ -21,25 +24,28 @@ import { NgxMaskPipe } from 'ngx-mask';
     MatListModule,
     MatButtonModule,
     DatePipe,
-    RouterLink,
     EditClientComponent,
-    NgxMaskPipe
+    NgxMaskPipe,
+    CurrencyPipe
   ],
   templateUrl: './client-details-component.html',
   styleUrl: './client-details-component.scss',
 })
-export class ClientDetailsComponent implements OnInit, OnDestroy {
+export class ClientDetailsComponent implements OnInit {
   private clientService = inject(ClientService);
+  private saleService = inject(SaleService);
   private notificationService = inject(NotificationService);
   private router = inject(Router);
   private dialogService = inject(DialogService);
   public selectedClient = this.clientService.selectedClient;
   public showEditClient = signal<boolean>(false);
+  public clientSales: Sale[] = [];
 
   ngOnInit(): void {
     if (!this.selectedClient()) {
       this.router.navigate(['../']);
     }
+    this.getClientSalesById();
   }
 
   public toggleShowEditClient() {
@@ -72,11 +78,25 @@ export class ClientDetailsComponent implements OnInit, OnDestroy {
 
     this.clientService.removeClient(id).subscribe(() => {
       this.notificationService.openNotification('Cliente removido com sucesso!');
-      this.router.navigate(['clients']);
+      this.goBack();
     });
   }
 
-  public ngOnDestroy(): void {
+  public goBack() {
     this.clientService.selectedClient.set(null);
+    this.router.navigate(['clients']);
+  }
+
+
+  public onSelectSale(sale: Sale) {
+    this.saleService.selectedSale.set(sale);
+    this.router.navigate(['clients', 'details', 'sale-details']);
+  }
+
+
+  private getClientSalesById() {
+    this.saleService.getSalesByClientId(this.selectedClient()?.id ?? '').subscribe((data: Sale[]) => {
+      this.clientSales = data;
+    })
   }
 }

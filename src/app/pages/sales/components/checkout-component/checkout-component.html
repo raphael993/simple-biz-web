@@ -76,5 +76,14 @@
     </section>
 </mat-card>
 } @else {
+<mat-card>
+    <mat-card-content>
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Observações</mat-label>
+            <textarea matInput rows="3" [value]="notes" (input)="notes = $any($event.target).value"></textarea>
+        </mat-form-field>
+    </mat-card-content>
+</mat-card>
+
 <app-payment-method [total]="total()" (pay)="onPayments($event)" (backToCheckout)="togglePaymentStep(false)" />
 }

@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
 import { openDB, DBSchema, StoreNames } from 'idb';
+import { Sale } from '../interfaces/sale.interface';
 
 export interface AppDB extends DBSchema {
   clients: { key: string; value: any };
   products: { key: string; value: any };
-  sale: { key: string; value: any };
+  sale: {
+    key: string;
+    value: Sale;
+    indexes: {
+      'clientId_idx': string;
+      'sellerId_idx': string;
+    };
+  };
 }
 
 @Injectable({ providedIn: 'root' })
 export class IndexedDbService {
 
-  private dbPromise = openDB<AppDB>('simple-biz', 1, {
-    upgrade(db) {
+  private dbPromise = openDB<AppDB>('simple-biz', 2, {
+    upgrade(db, oldVersion, newVersion, transaction) {
 
       if (!db.objectStoreNames.contains('clients')) {
         db.createObjectStore('clients', { keyPath: 'id' });
@@ -21,11 +29,25 @@ export class IndexedDbService {
         db.createObjectStore('products', { keyPath: 'id' });
       }
 
+      let saleStore;
+
       if (!db.objectStoreNames.contains('sale')) {
-        db.createObjectStore('sale', { keyPath: 'id' });
+        saleStore = db.createObjectStore('sale', { keyPath: 'id' });
+      } else {
+        saleStore = transaction.objectStore('sale');
+      }
+
+      if (!saleStore.indexNames.contains('clientId_idx')) {
+        saleStore.createIndex('clientId_idx', 'clientId', { unique: false });
+      }
+
+      if (!saleStore.indexNames.contains('sellerId_idx')) {
+        saleStore.createIndex('sellerId_idx', 'sellerId', { unique: false });
       }
     }
   });
+
+  /* ================= CRUD GENÉRICO ================= */
 
   async getAll<S extends StoreNames<AppDB>>(
     storeName: S
@@ -66,7 +88,19 @@ export class IndexedDbService {
     await db.delete(storeName, id);
   }
 
-  // backup
+  /* ================= QUERIES COM INDEX ================= */
+
+  async getSalesByClientId(clientId: string) {
+    const db = await this.dbPromise;
+    return db.getAllFromIndex('sale', 'clientId_idx', clientId);
+  }
+
+  async getSalesBySellerId(sellerId: string) {
+    const db = await this.dbPromise;
+    return db.getAllFromIndex('sale', 'sellerId_idx', sellerId);
+  }
+
+  /* ================= BACKUP ================= */
 
   async exportAll(): Promise<Record<string, unknown[]>> {
     const db = await this.dbPromise;
@@ -98,9 +132,9 @@ export class IndexedDbService {
     const db = await this.dbPromise;
     const tx = db.transaction(db.objectStoreNames, 'readwrite');
 
-    db.clear('clients');
-    db.clear('products');
-    db.clear('sale');
+    await tx.objectStore('clients').clear();
+    await tx.objectStore('products').clear();
+    await tx.objectStore('sale').clear();
 
     await tx.done;
   }
