@@ -10,6 +10,7 @@ import { ProductService } from '../../services/product.service';
 import { SaleService } from '../../services/sale.service';
 import { ShoppingCartComponent } from "./components/shopping-cart-component/shopping-cart-component";
 import { MatIconModule } from '@angular/material/icon';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-sales',
@@ -29,6 +30,7 @@ export class SalesComponent implements OnInit {
   clientService = inject(ClientService);
   productService = inject(ProductService);
   saleService = inject(SaleService);
+  utils = inject(UtilsService);
 
   clients = signal<Array<Client>>([]);
   products = signal<Array<Product>>([]);
@@ -44,6 +46,7 @@ export class SalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.utils.mockLoaderPerSeconds(1);
     this.getProducts();
     this.getClients();
   }

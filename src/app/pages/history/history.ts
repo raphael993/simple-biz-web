@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { SalesHistoryTableComponent } from './components/sales-history-table-component/sales-history-table-component';
 import { SaleService } from '../../services/sale.service';
 import { FilterSale, Sale } from '../../interfaces/sale.interface';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-history',
@@ -17,6 +18,7 @@ import { FilterSale, Sale } from '../../interfaces/sale.interface';
 })
 export class HistoryComponent {
   private readonly saleService = inject(SaleService);
+  private utils = inject(UtilsService);
 
   public salesList: Array<Sale> = [];
   public filteredSalesList: Array<Sale> = [];
@@ -31,6 +33,7 @@ export class HistoryComponent {
   }
 
   public ngOnInit(): void {
+    this.utils.mockLoaderPerSeconds(1);
     this.getSaleList();
   }
 

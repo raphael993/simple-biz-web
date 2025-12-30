@@ -8,6 +8,7 @@ import { CreateClientComponent } from './components/create-client-component/crea
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NotificationService } from '../../services/notification.service';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-clients',
@@ -25,11 +26,13 @@ import { NotificationService } from '../../services/notification.service';
 export class ClientsComponent implements OnInit {
   private readonly clientService = inject(ClientService);
   private notificationService = inject(NotificationService);
+  private utils = inject(UtilsService);
 
   public showClientForm = signal<boolean>(false);
   public clientList: Array<Client> = [];
 
   public ngOnInit(): void {
+    this.utils.mockLoaderPerSeconds(1);
     this.getClientList();
   }
 

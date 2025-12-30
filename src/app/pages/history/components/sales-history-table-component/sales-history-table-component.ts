@@ -13,6 +13,7 @@ import { SaleService } from '../../../../services/sale.service';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../../../services/utils.service';
 import { HistoryFilterComponent } from "../history-filter-component/history-filter-component";
+import { CdkVirtualScrollableElement } from "@angular/cdk/scrolling";
 
 @Component({
   selector: 'app-sales-history-table-component',
@@ -27,8 +28,9 @@ import { HistoryFilterComponent } from "../history-filter-component/history-filt
     MatMenuModule,
     CurrencyPipe,
     DatePipe,
-    HistoryFilterComponent
-  ],
+    HistoryFilterComponent,
+    CdkVirtualScrollableElement
+],
   templateUrl: './sales-history-table-component.html',
   styleUrl: './sales-history-table-component.scss',
 })
@@ -46,11 +48,12 @@ export class SalesHistoryTableComponent implements AfterViewInit {
   displayedColumns: string[] = ['Valor', 'Data', 'Cliente', 'Qt. Itens', 'Ações'];
 
   generalBalance: {
+    isHide: boolean,
     salesNumber: number,
     itensNumber: number,
     totalValue: number,
     profit: number
-  } = { salesNumber: 0, itensNumber: 0, totalValue: 0, profit: 0 };
+  } = { isHide: false, salesNumber: 0, itensNumber: 0, totalValue: 0, profit: 0 };
 
   constructor() {
     effect(() => {
@@ -97,6 +100,16 @@ export class SalesHistoryTableComponent implements AfterViewInit {
       profit += sale.profit ?? 0;
     });
 
-    this.generalBalance = { salesNumber, itensNumber, totalValue, profit }
+    this.generalBalance = { 
+      ...this.generalBalance,
+      salesNumber,
+      itensNumber,
+      totalValue,
+      profit 
+    }
+  }
+
+  toggleVisibilityBalance() {
+    this.generalBalance.isHide = !this.generalBalance.isHide;
   }
 }

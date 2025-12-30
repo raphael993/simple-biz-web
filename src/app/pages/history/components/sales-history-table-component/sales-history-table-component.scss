@@ -30,6 +30,13 @@
         margin: 15px 0;
         padding: 12px 16px;
         border-radius: 12px;
+
+        .toggle-visibility-area {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            cursor: pointer;
+        }
     }
 
     .summary-row {
@@ -55,14 +62,15 @@
     .value {
         font-size: 18px;
         font-weight: 600;
+        transition: filter 0.25s ease, opacity 0.25s ease;
     }
 
     .label-a {
-        color: #455a64; // azul acinzentado
+        color: #455a64;
     }
 
     .label-b {
-        color: #2e7d32; // verde material
+        color: #2e7d32;
     }
 
     .divider {
@@ -70,4 +78,9 @@
         height: 32px;
         background-color: rgba(0, 0, 0, 0.12);
     }
+}
+
+.hide {
+    filter: blur(6px);
+    opacity: 0.7;
 }

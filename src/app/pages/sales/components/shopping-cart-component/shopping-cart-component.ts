@@ -104,10 +104,17 @@ export class ShoppingCartComponent {
   }
 
   onClearCart() {
-    this.cartItems.set([]);
-    this.saleService.removeFromProductCart.set(this.saleService.productCart());
-    this.saleService.productCart.set([]);
-    this.saleService.addToProductCart.set(null);
-    this.clearCart.emit();
+    this.dialogService
+      .showConfirmationDialog({ title: 'Limpar', message: `Tem certeza que deseja limpar TODOS os itens do carrinho?` })
+      .subscribe(result => {
+        if (!result) {
+          return
+        }
+        this.cartItems.set([]);
+        this.saleService.removeFromProductCart.set(this.saleService.productCart());
+        this.saleService.productCart.set([]);
+        this.saleService.addToProductCart.set(null);
+        this.clearCart.emit();
+      });
   }
 }

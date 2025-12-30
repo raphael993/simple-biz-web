@@ -1,2 +1,12 @@
 <app-header-component />
 <router-outlet></router-outlet>
+
+@if (utils.loaderState()) {
+  <div class="loader-backdrop">
+    <mat-progress-spinner
+      mode="indeterminate"
+      diameter="60"
+      color="primary">
+    </mat-progress-spinner>
+  </div>
+}

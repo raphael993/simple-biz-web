@@ -8,6 +8,7 @@ import { CreateProductComponent } from './components/create-product-component/cr
 import { NotificationService } from '../../services/notification.service';
 import { FilterProduct, Product } from '../../interfaces/product.interface';
 import { ProductService } from '../../services/product.service';
+import { UtilsService } from '../../services/utils.service';
 
 @Component({
   selector: 'app-products',
@@ -25,6 +26,7 @@ import { ProductService } from '../../services/product.service';
 export class ProductsComponent {
   private readonly productService = inject(ProductService);
   private notificationService = inject(NotificationService);
+  private utils = inject(UtilsService);
 
   public showProductForm = signal<boolean>(false);
   public productList: Array<Product> = [];
@@ -40,6 +42,7 @@ export class ProductsComponent {
   }
 
   public ngOnInit(): void {
+    this.utils.mockLoaderPerSeconds(1);
     this.getProductList();
   }
 
