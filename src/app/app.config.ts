@@ -2,10 +2,23 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChang
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_FORMATS, MatDateFormats, provideNativeDateAdapter } from '@angular/material/core';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { provideEnvironmentNgxCurrency } from 'ngx-currency';
 import { provideServiceWorker } from '@angular/service-worker';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+
+export const CUSTOM_DATE_FORMATS: MatDateFormats = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,11 +36,13 @@ export const appConfig: ApplicationConfig = {
       suffix: '',
       thousands: '.'
     }), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          })
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }), provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
+    provideMomentDateAdapter(),
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS }
   ]
 };

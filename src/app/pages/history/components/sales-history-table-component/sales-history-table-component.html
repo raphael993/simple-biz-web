@@ -5,7 +5,36 @@
     <mat-hint>Procure pelo nome do cliente, valor pago ou observações</mat-hint>
 </mat-form-field>
 
-<!-- <app-product-filter-component /> -->
+<app-history-filter-component />
+
+<mat-card class="summary-card">
+  <div class="summary-row">
+    <div class="summary-item">
+      <span class="label">Vendas</span>
+      <span class="value label-a">{{ generalBalance.salesNumber }}</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="summary-item">
+      <span class="label">Itens vendidos</span>
+      <span class="value label-b">{{ generalBalance.itensNumber }}</span>
+    </div>
+  </div>
+  <div class="summary-row">
+    <div class="summary-item">
+      <span class="label">Valor Obtido</span>
+      <span class="value label-a">{{ generalBalance.totalValue | currency:'BRL' }}</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="summary-item">
+      <span class="label">Lucro Real</span>
+      <span class="value label-b">{{ generalBalance.profit | currency:'BRL' }}</span>
+    </div>
+  </div>
+</mat-card>
 
 
 @if (!dataSource.data.length) {

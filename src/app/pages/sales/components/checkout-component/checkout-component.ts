@@ -15,6 +15,7 @@ import { DialogService } from '../../../../services/dialog.service';
 import { NotificationService } from '../../../../services/notification.service';
 import { CartItem, Product } from '../../../../interfaces/product.interface';
 import { ProductService } from '../../../../services/product.service';
+import { ProductType } from '../../../../enums/product-type.enum';
 
 @Component({
   selector: 'app-checkout-component',
@@ -62,7 +63,6 @@ export class CheckoutComponent {
 
   goBack(): void {
     this.saleService.checkoutData.set([]);
-    this.saleService.productCart.set([]); // TODO: verificar por que não esta limpando o carrinho completamente
     this.router.navigate(['../']);
   }
 
@@ -121,6 +121,9 @@ export class CheckoutComponent {
 
   removeSoldProductsFromStock(soldItems: CartItem[]) {
     soldItems.forEach(sold => {
+      if (sold.product.type === ProductType.SERVICE) {
+        return;
+      }
       this.productService.updateProduct({ 
         ...sold.product,
         quantity: (sold.product.quantity - sold.quantity)
@@ -134,6 +137,8 @@ export class CheckoutComponent {
 
   clearState() {
     this.clientService.selectedClient.set(null);
+    this.saleService.addToProductCart.set(null);
+    this.saleService.removeFromProductCart.set([]);
     this.saleService.productCart.set([]);
     this.saleService.checkoutData.set([]);
   }

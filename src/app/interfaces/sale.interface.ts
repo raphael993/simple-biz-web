@@ -17,3 +17,9 @@ export interface Sale {
     createAt: Date,
     notes?: string | null;
 }
+
+export interface FilterSale {
+    startDate?: Date;
+    endDate?: Date;
+    clear?: Boolean;
+}

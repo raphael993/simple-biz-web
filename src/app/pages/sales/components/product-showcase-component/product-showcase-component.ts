@@ -46,7 +46,9 @@ export class ProductShowcaseComponent {
         return;
       }
 
-      this.updateItemQuantity(removedFromCart[0], true);
+      removedFromCart.forEach((toRemove) => {
+        this.updateItemQuantity(toRemove, true);
+      })
     })
   }
 

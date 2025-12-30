@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from "@angular/core";
 import { CartItem, Product } from "../interfaces/product.interface";
 import { from, Observable } from "rxjs";
-import { Sale } from "../interfaces/sale.interface";
+import { FilterSale, Sale } from "../interfaces/sale.interface";
 import { SaleStorageService } from "../storage/sale-storage.service";
 
 @Injectable({
@@ -13,6 +13,8 @@ export class SaleService {
   public productCart = signal<Product[]>([]);
   public checkoutData = signal<CartItem[]>([]);
   public selectedSale = signal<Sale | null>(null);
+  public filterChange = signal<FilterSale | null>(null);
+
   private saleStorageService = inject(SaleStorageService);
 
   public getSalesList(): Observable<Sale[]> {

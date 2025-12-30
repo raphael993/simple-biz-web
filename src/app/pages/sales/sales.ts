@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { SelectClientComponent } from "./components/select-client-component/select-client-component";
@@ -29,9 +29,10 @@ export class SalesComponent implements OnInit {
   clientService = inject(ClientService);
   productService = inject(ProductService);
   saleService = inject(SaleService);
-  
-  clients: Array<Client> = [];
-  products: Array<Product> = [];
+
+  clients = signal<Array<Client>>([]);
+  products = signal<Array<Product>>([]);
+  originalProducts: Array<Product> = [];
 
   constructor() {
     effect(() => {
@@ -43,12 +44,23 @@ export class SalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.clientService.getClientList().subscribe(data => {
-      this.clients = data;
-    });
+    this.getProducts();
+    this.getClients();
+  }
 
+  getProducts() {
     this.productService.getProductList().subscribe(data => {
-      this.products = data;
+      this.products.set(data);
     });
+  }
+
+  getClients() {
+    this.clientService.getClientList().subscribe(data => {
+      this.clients.set(data);
+    });
+  }
+
+  clearCart() {
+    this.products.update(current => [...current])
   }
 }

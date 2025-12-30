@@ -25,6 +25,8 @@ export class ShoppingCartComponent {
   private router = inject(Router);
   private rawCart = this.saleService.productCart;
 
+  public clearCart = output();
+
   cartItems = signal<CartItem[]>([]);
 
   constructor() {
@@ -101,7 +103,11 @@ export class ShoppingCartComponent {
     this.router.navigate(['sales/checkout']);
   }
 
-  ngOnDestroy() {
-    this.cartItems.set([])
+  onClearCart() {
+    this.cartItems.set([]);
+    this.saleService.removeFromProductCart.set(this.saleService.productCart());
+    this.saleService.productCart.set([]);
+    this.saleService.addToProductCart.set(null);
+    this.clearCart.emit();
   }
 }

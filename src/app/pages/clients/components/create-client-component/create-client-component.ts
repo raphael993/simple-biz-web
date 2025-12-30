@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxMaskDirective } from 'ngx-mask';
+import moment from 'moment';
 
 @Component({
   selector: 'app-create-client-component',
@@ -49,7 +50,7 @@ export class CreateClientComponent implements OnInit {
     if (!this.clientForm.valid) {
       return;
     }
-    const payload: Client = this.clientForm.getRawValue();
+    const payload: Client = { ...this.clientForm.getRawValue(), bithDate: moment(this.clientForm.getRawValue().bithDate).toDate() };
     this.createClient.emit(payload);
     this.showClientForm.emit(false);
   }

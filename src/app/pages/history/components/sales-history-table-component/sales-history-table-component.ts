@@ -12,6 +12,7 @@ import { Sale } from '../../../../interfaces/sale.interface';
 import { SaleService } from '../../../../services/sale.service';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../../../services/utils.service';
+import { HistoryFilterComponent } from "../history-filter-component/history-filter-component";
 
 @Component({
   selector: 'app-sales-history-table-component',
@@ -26,7 +27,7 @@ import { UtilsService } from '../../../../services/utils.service';
     MatMenuModule,
     CurrencyPipe,
     DatePipe,
-    // ProductFilterComponent,
+    HistoryFilterComponent
   ],
   templateUrl: './sales-history-table-component.html',
   styleUrl: './sales-history-table-component.scss',
@@ -37,16 +38,24 @@ export class SalesHistoryTableComponent implements AfterViewInit {
 
   private saleService = inject(SaleService);
   private router = inject(Router)
-  
+
   private readonly utils = inject(UtilsService);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = ['Valor', 'Data', 'Cliente', 'Qt. Itens', 'Ações'];
 
+  generalBalance: {
+    salesNumber: number,
+    itensNumber: number,
+    totalValue: number,
+    profit: number
+  } = { salesNumber: 0, itensNumber: 0, totalValue: 0, profit: 0 };
+
   constructor() {
     effect(() => {
       this.dataSource.data = this.salesList();
+      this.calculateBalance();
     });
   }
 
@@ -72,5 +81,22 @@ export class SalesHistoryTableComponent implements AfterViewInit {
   public showSaleDetailsAction(sale: Sale) {
     this.saleService.selectedSale.set(sale);
     this.router.navigate(['history', 'details']);
+  }
+
+  calculateBalance() {
+    const sales = this.salesList();
+
+    let salesNumber = sales.length;
+    let itensNumber = 0;
+    let totalValue = 0;
+    let profit = 0;
+
+    sales.forEach(sale => {
+      itensNumber += sale.cartItems.length;
+      totalValue += sale.total ?? 0;
+      profit += sale.profit ?? 0;
+    });
+
+    this.generalBalance = { salesNumber, itensNumber, totalValue, profit }
   }
 }

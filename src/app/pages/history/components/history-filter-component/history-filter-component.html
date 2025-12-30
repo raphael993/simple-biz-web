@@ -1,0 +1,28 @@
+<mat-accordion>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title> Aplicar filtros</mat-panel-title>
+        </mat-expansion-panel-header>
+        <form [formGroup]="filterForm" class="filters-row">
+            <mat-form-field appearance="fill">
+                <mat-label>De</mat-label>
+                <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #startDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Até</mat-label>
+                <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-icon-button type="button" aria-label="Limpar filtros" matTooltip="Limpar filtros"
+                (click)="clearFilters()" class="clear-button">
+                <mat-icon>clear</mat-icon>
+            </button>
+
+        </form>
+    </mat-expansion-panel>
+</mat-accordion>
