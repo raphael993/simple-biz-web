@@ -49,7 +49,6 @@ export class HistoryComponent {
 
       let filtered: Array<Sale> = data;
 
-      debugger
 
       if (filters.startDate) {
         filtered = filtered.filter(sale => sale.createAt > (filters.startDate ?? new Date()))
