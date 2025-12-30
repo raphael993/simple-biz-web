@@ -3,7 +3,6 @@
 
   <mat-card-content class="column gap">
 
-    <!-- Tipo de pagamento -->
     <mat-form-field appearance="outline">
       <mat-label>Tipo</mat-label>
       <mat-select [value]="selectedType()" (selectionChange)="selectedType.set($event.value)">
@@ -14,13 +13,11 @@
       </mat-select>
     </mat-form-field>
 
-    <!-- Valor -->
     <mat-form-field appearance="outline">
       <mat-label>Valor</mat-label>
       <input matInput type="text" currencyMask [formControl]="valueControl" />
     </mat-form-field>
 
-    <!-- Resumo -->
     <div class="summary">
       <strong>Total:</strong>{{ total() | currency:'BRL' }}<br />
       <strong>Pago:</strong> {{ paid() | currency:'BRL' }}<br />

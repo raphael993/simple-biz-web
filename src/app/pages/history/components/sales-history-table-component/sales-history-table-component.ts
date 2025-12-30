@@ -31,7 +31,7 @@ import { UtilsService } from '../../../../services/utils.service';
   templateUrl: './sales-history-table-component.html',
   styleUrl: './sales-history-table-component.scss',
 })
-export class SalesHistoryTableComponent implements AfterViewInit, OnDestroy {
+export class SalesHistoryTableComponent implements AfterViewInit {
   public salesList = input<Array<Sale>>([]);
   public dataSource = new MatTableDataSource<Sale>();
 
@@ -72,9 +72,5 @@ export class SalesHistoryTableComponent implements AfterViewInit, OnDestroy {
   public showSaleDetailsAction(sale: Sale) {
     this.saleService.selectedSale.set(sale);
     this.router.navigate(['history', 'details']);
-  }
-
-  ngOnDestroy() {
-    this.dataSource.paginator = null!;
   }
 }

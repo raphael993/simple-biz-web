@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { Router, RouterLink } from '@angular/router';
 import { SaleService } from '../../../../services/sale.service';
+import { PaymentFormTypes } from '../../../../enums/payment-form-types';
 
 @Component({
   selector: 'app-sale-details-component',
@@ -27,6 +28,7 @@ export class SaleDetailsComponent {
   private saleService = inject(SaleService);
   private router = inject(Router);
   public selectedSale = this.saleService.selectedSale;
+  public paymentTypes = PaymentFormTypes;
 
   ngOnInit(): void {
     if (!this.selectedSale()) {

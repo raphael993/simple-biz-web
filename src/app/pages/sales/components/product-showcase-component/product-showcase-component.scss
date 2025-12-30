@@ -4,19 +4,16 @@
   gap: 12px;
 }
 
-/* mantém input e botão fixos */
 .full-width {
   width: 100%;
 }
 
-/* 🔽 área com scroll */
 mat-list {
-  max-height: 320px;       /* ajuste conforme o layout */
+  max-height: 320px;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-/* melhora UX do scroll */
 mat-list::-webkit-scrollbar {
   width: 6px;
 }

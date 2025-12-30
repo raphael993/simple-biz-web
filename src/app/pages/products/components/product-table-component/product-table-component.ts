@@ -32,7 +32,7 @@ import { ProductFilterComponent } from '../product-filter-component/product-filt
   templateUrl: './product-table-component.html',
   styleUrl: './product-table-component.scss',
 })
-export class ProductTableComponent implements AfterViewInit, OnDestroy {
+export class ProductTableComponent implements AfterViewInit {
   public productList = input<Array<Product>>([]);
   public dataSource = new MatTableDataSource<Product>();
   
@@ -86,9 +86,5 @@ export class ProductTableComponent implements AfterViewInit, OnDestroy {
   public showProductDetailsAction(product: Product) {
     this.productService.selectedProduct.set(product);
     this.router.navigate(['products', 'details']);
-  }
-
-  ngOnDestroy() {
-    this.dataSource.paginator = null!;
   }
 }

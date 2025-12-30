@@ -14,6 +14,7 @@ import { Sale } from '../../../../interfaces/sale.interface';
 import { DialogService } from '../../../../services/dialog.service';
 import { NotificationService } from '../../../../services/notification.service';
 import { CartItem, Product } from '../../../../interfaces/product.interface';
+import { ProductService } from '../../../../services/product.service';
 
 @Component({
   selector: 'app-checkout-component',
@@ -32,6 +33,7 @@ import { CartItem, Product } from '../../../../interfaces/product.interface';
 export class CheckoutComponent {
   private saleService = inject(SaleService);
   private clientService = inject(ClientService);
+  private productService = inject(ProductService);
   private dialogService = inject(DialogService);
   private notificationService = inject(NotificationService);
   private router = inject(Router);
@@ -113,10 +115,21 @@ export class CheckoutComponent {
     }
 
     this.saleService.createSale(sale).subscribe(() => {
-      this.notificationService.openNotification('Venda realizada com sucesso!');
-      this.clearState();
-      this.router.navigate(['/']);
+      this.removeSoldProductsFromStock(sale.cartItems);
     });
+  }
+
+  removeSoldProductsFromStock(soldItems: CartItem[]) {
+    soldItems.forEach(sold => {
+      this.productService.updateProduct({ 
+        ...sold.product,
+        quantity: (sold.product.quantity - sold.quantity)
+      })
+    });
+
+    this.notificationService.openNotification('Venda realizada com sucesso!');
+    this.clearState();
+    this.router.navigate(['/']);
   }
 
   clearState() {

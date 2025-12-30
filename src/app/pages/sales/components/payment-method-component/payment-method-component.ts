@@ -29,8 +29,6 @@ import { DialogService } from '../../../../services/dialog.service';
   styleUrl: './payment-method-component.scss'
 })
 export class PaymentMethodComponent {
-
-  /** valor total recebido do componente pai */
   total = input.required<number>();
   pay = output<Payment[]>();
   backToCheckout = output();
@@ -39,27 +37,20 @@ export class PaymentMethodComponent {
 
   paymentFormTypes = PaymentFormTypes;
 
-  /** pagamentos adicionados */
   payments = signal<Payment[]>([]);
-
-  /** tipo selecionado */
   selectedType = signal<PaymentType>('PIX');
 
-  /** FormControl usado pelo ngx-currency */
   valueControl = new FormControl<number>(0, { nonNullable: true });
 
-  /** total já pago */
   paid = computed(() =>
     this.payments().reduce((sum, p) => sum + p.value, 0)
   );
 
-  /** valor restante */
   remaining = computed(() =>
     Math.max(this.total() - this.paid(), 0)
   );
 
   constructor() {
-    /** sempre que o restante mudar, preencher o input automaticamente */
     effect(() => {
       this.valueControl.setValue(this.remaining(), { emitEvent: false });
     });

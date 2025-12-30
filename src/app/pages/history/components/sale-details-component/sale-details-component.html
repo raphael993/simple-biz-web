@@ -104,7 +104,6 @@
 
         </mat-list>
 
-        <!-- Pagamentos -->
         @if (selectedSale.paymentsList?.length) {
         <h3 class="section-title">Pagamentos</h3>
 
@@ -114,7 +113,7 @@
                 <mat-icon matListItemIcon>credit_card</mat-icon>
 
                 <div matListItemTitle>
-                    {{ payment.type | titlecase }}
+                    {{ paymentTypes[payment.type] | titlecase }}
                 </div>
 
                 <div matListItemLine>

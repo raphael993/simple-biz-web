@@ -31,6 +31,12 @@
         gap: 8px;
     }
 
+    .purchase-history mat-card-content {
+        max-height: 300px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
     mat-list-item {
         cursor: pointer;
     }

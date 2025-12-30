@@ -53,7 +53,7 @@
                 <mat-icon matListItemIcon>payments</mat-icon>
                 <div matListItemTitle>Lucro</div>
                 <div matListItemLine>Por unidade: {{ (selectedProduct.price - selectedProduct.costPrice) | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
-                <div matListItemLine>Total em estoque {{ (selectedProduct.price - selectedProduct.costPrice * selectedProduct.quantity) | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
+                <div matListItemLine>Total em estoque {{ (selectedProduct.price - selectedProduct.costPrice) * selectedProduct.quantity | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</div>
             </mat-list-item>
             }
 

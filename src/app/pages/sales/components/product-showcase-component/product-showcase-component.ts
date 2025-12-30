@@ -42,7 +42,7 @@ export class ProductShowcaseComponent {
     effect(() => {
       const removedFromCart = this.saleService.removeFromProductCart();
 
-      if (!removedFromCart.length) {
+      if (!removedFromCart.length || removedFromCart[0].type === ProductType.SERVICE) {
         return;
       }
 
@@ -76,13 +76,18 @@ export class ProductShowcaseComponent {
   addToCart() {
     const product = this.selectedProduct();
     if (!product) return;
+    
+    if (product.type === ProductType.SERVICE) {
+      this.saleService.addToProductCart.set({...product});
+      return;
+    }
     if (product.quantity == 0) {
       this.notificationService.openNotification('Sem estoque para adicionar o item ao carrinho.');
       return;
     }
 
-    this.updateItemQuantity(product, false);
     this.saleService.addToProductCart.set({...product});
+    this.updateItemQuantity(product, false);
   }
 
   isSelected(product: Product): boolean {

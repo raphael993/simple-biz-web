@@ -30,7 +30,7 @@ import { NgxMaskPipe } from 'ngx-mask';
   templateUrl: './client-table-component.html',
   styleUrl: './client-table-component.scss',
 })
-export class ClientTableComponent implements AfterViewInit, OnDestroy {
+export class ClientTableComponent implements AfterViewInit {
   public clientList = input<Array<Client>>([]);
   public dataSource = new MatTableDataSource<Client>();
   
@@ -84,9 +84,5 @@ export class ClientTableComponent implements AfterViewInit, OnDestroy {
   public showClientDetailsAction(client: Client) {
     this.clientService.selectedClient.set(client);
     this.router.navigate(['clients', 'details']);
-  }
-
-  ngOnDestroy() {
-    this.dataSource.paginator = null!;
   }
 }
