@@ -130,7 +130,7 @@
           </div>
 
           <div matListItemLine>
-            {{ sale.cartItems.length === 1 ? `${sale.cartItems.length} item` : `${sale.cartItems.length} itens` }} • <strong class="cash">{{ sale.total | currency:'BRL' }}</strong>
+            {{ sale.cartItems.length === 1 ? `${sale.cartItems.length} item` : `${sale.cartItems.length} itens` }} • <strong class="cash">{{ sale.total | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</strong>
           </div>
         </mat-list-item>
         }

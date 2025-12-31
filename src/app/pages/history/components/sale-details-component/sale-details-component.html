@@ -3,7 +3,9 @@
 
     <!-- Cabeçalho -->
     <mat-card-header>
-        <mat-icon matListItemIcon color="primary">receipt_long</mat-icon>
+        <div mat-card-avatar class="avatar material-symbols-outlined">
+            <mat-icon matListItemIcon>point_of_sale</mat-icon>
+        </div>
         <mat-card-title>
             Venda registrada
         </mat-card-title>
@@ -54,12 +56,12 @@
                 </div>
 
                 <div matListItemLine>
-                    {{ item.quantity }} × {{ item.product.price | currency:'BRL' }}
+                    {{ item.quantity }} × {{ item.product.price | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
                 </div>
 
                 <div matListItemLine>
                     Total:
-                    {{ (item.product.price * item.quantity) | currency:'BRL' }}
+                    {{ (item.product.price * item.quantity) | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
                 </div>
             </mat-list-item>
             }
@@ -75,7 +77,7 @@
                 <mat-icon matListItemIcon>payments</mat-icon>
                 <div matListItemTitle>Subtotal</div>
                 <div matListItemLine>
-                    {{ selectedSale.subtotal | currency:'BRL' }}
+                    {{ selectedSale.subtotal | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
                 </div>
             </mat-list-item>
             }
@@ -86,7 +88,7 @@
                 <div matListItemTitle>Desconto</div>
                 <div matListItemLine>
                     {{ selectedSale.discountPercent }}%
-                    ({{ selectedSale.discountValue | currency:'BRL' }})
+                    ({{ selectedSale.discountValue | currency:'BRL':'symbol':'1.2-2':'pt-BR' }})
                 </div>
             </mat-list-item>
             }
@@ -95,9 +97,9 @@
                 <mat-icon matListItemIcon color="primary">paid</mat-icon>
                 <div matListItemTitle>Total</div>
                 <div matListItemLine>
-                    <strong>{{ selectedSale.total | currency:'BRL' }} </strong>
+                    <strong>{{ selectedSale.total | currency:'BRL':'symbol':'1.2-2':'pt-BR' }} </strong>
                     @if(selectedSale.profit) {
-                        <small>(Lucro obtido: <span class="cash">{{ (selectedSale.profit) | currency:'BRL'  }} </span>)</small>
+                        <small>(Lucro obtido: <span class="cash">{{ (selectedSale.profit) | currency:'BRL':'symbol':'1.2-2':'pt-BR'  }} </span>)</small>
                     }
                 </div>
             </mat-list-item>
@@ -117,7 +119,7 @@
                 </div>
 
                 <div matListItemLine>
-                    {{ payment.value | currency:'BRL' }}
+                    {{ payment.value | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
                 </div>
             </mat-list-item>
             }

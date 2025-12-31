@@ -34,7 +34,7 @@
     <div class="summary-item">
       <span class="label">Valor Obtido</span>
       <span class="value label-a" [class.hide]="generalBalance.isHide">
-        {{ generalBalance.totalValue | currency:'BRL' }}
+        {{ generalBalance.totalValue | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
       </span>
     </div>
 
@@ -43,7 +43,7 @@
     <div class="summary-item">
       <span class="label">Lucro Real</span>
       <span class="value label-b" [class.hide]="generalBalance.isHide">
-        {{ generalBalance.profit | currency:'BRL' }}
+        {{ generalBalance.profit | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
       </span>
     </div>
   </div>
@@ -56,7 +56,7 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 striped-table">
     <ng-container matColumnDef="Valor">
         <th mat-header-cell *matHeaderCellDef> Valor </th>
-        <td mat-cell *matCellDef="let element">{{ element.total | currency:'BRL':'symbol':'1.2-2':'pt-BR'}} </td>
+        <td mat-cell *matCellDef="let element">{{ element.total | currency:'BRL':'symbol':'1.2-2':'pt-BR' }} </td>
     </ng-container>
 
     <ng-container matColumnDef="Data">

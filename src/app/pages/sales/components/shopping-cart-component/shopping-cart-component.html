@@ -17,9 +17,9 @@
 
               <div class="details">
                 <span>Qtd: {{ item.quantity }}</span>
-                <span>Unit: {{ item.product.price | currency:'BRL' }}</span>
+                <span>Unit: {{ item.product.price | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
                 <span class="subtotal">
-                  {{ item.product.price * item.quantity | currency:'BRL' }}
+                  {{ item.product.price * item.quantity | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
                 </span>
               </div>
             </div>
@@ -36,7 +36,7 @@
       <div class="cart-footer">
         <div class="total">
           Total:
-          <strong class="cash">{{ total() | currency:'BRL' }}</strong>
+          <strong class="cash">{{ total() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</strong>
         </div>
         <button mat-raised-button (click)="onClearCart()">
           Limpar carrinho

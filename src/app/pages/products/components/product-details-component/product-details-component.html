@@ -14,7 +14,9 @@
 @if (!showEditProduct() && selectedProduct(); as selectedProduct) {
 <mat-card class="product-view">
     <mat-card-header>
-        <mat-icon matListItemIcon color="primary">payments</mat-icon>
+        <div mat-card-avatar class="avatar material-symbols-outlined">
+          <mat-icon matListItemIcon>shopping_cart</mat-icon>
+        </div>
         <mat-card-title>{{ selectedProduct.name }}</mat-card-title>
 
         @if (selectedProduct.description) {

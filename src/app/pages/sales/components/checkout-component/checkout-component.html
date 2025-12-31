@@ -19,7 +19,7 @@
             <span class="name">{{ item.product.name }}</span>
             <span class="qty">{{ item.quantity }}</span>
             <span class="price">
-                {{ item.product.price * item.quantity | currency:'BRL' }}
+                {{ item.product.price * item.quantity | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
             </span>
         </div>
         }
@@ -40,19 +40,19 @@
     <section class="summary">
         <div class="row">
             <span>Subtotal</span>
-            <span>{{ subtotal() | currency:'BRL' }}</span>
+            <span>{{ subtotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
         </div>
 
         @if (discountPercent() > 0) {
         <div class="row discount-row">
             <span>Desconto ({{ discountPercent() }}%)</span>
-            <span>- {{ discountValue() | currency:'BRL' }}</span>
+            <span>- {{ discountValue() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
         </div>
         }
 
         <div class="row total">
             <strong>Total</strong>
-            <strong>{{ total() | currency:'BRL' }}</strong>
+            <strong>{{ total() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</strong>
         </div>
     </section>
 

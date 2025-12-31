@@ -19,9 +19,9 @@
     </mat-form-field>
 
     <div class="summary">
-      <strong>Total:</strong>{{ total() | currency:'BRL' }}<br />
-      <strong>Pago:</strong> {{ paid() | currency:'BRL' }}<br />
-      <strong>Restante:</strong> {{ remaining() | currency:'BRL' }}
+      <strong>Total:</strong>{{ total() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}<br />
+      <strong>Pago:</strong> {{ paid() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}<br />
+      <strong>Restante:</strong> {{ remaining() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
     </div>
 
     <section class="actions">
@@ -43,7 +43,7 @@
     @for (p of payments(); track i; let i = $index) {
     <div class="payment-row">
       <span>
-        {{ paymentFormTypes[p.type] }} — {{ p.value | currency:'BRL' }}
+        {{ paymentFormTypes[p.type] }} — {{ p.value | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
       </span>
 
       <button mat-button color="warn" (click)="removePayment(i)">

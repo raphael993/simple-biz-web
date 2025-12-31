@@ -57,11 +57,11 @@ export class HistoryComponent {
 
 
       if (filters.startDate) {
-        filtered = filtered.filter(sale => sale.createAt > (filters.startDate ?? new Date()))
+        filtered = filtered.filter(sale => sale.createAt >= (filters.startDate ?? new Date()))
       }
 
       if (filters.endDate) {
-        filtered = filtered.filter(sale => sale.createAt < (filters.endDate ?? new Date()))
+        filtered = filtered.filter(sale => sale.createAt <= (filters.endDate ?? new Date()))
       }
   
       this.filteredSalesList = filtered;
