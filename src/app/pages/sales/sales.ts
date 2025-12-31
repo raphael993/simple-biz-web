@@ -11,6 +11,8 @@ import { SaleService } from '../../services/sale.service';
 import { ShoppingCartComponent } from "./components/shopping-cart-component/shopping-cart-component";
 import { MatIconModule } from '@angular/material/icon';
 import { UtilsService } from '../../services/utils.service';
+import { MatBadgeModule } from '@angular/material/badge';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-sales',
@@ -20,7 +22,8 @@ import { UtilsService } from '../../services/utils.service';
     SelectClientComponent,
     ProductShowcaseComponent,
     ShoppingCartComponent,
-    MatIconModule
+    MatIconModule,
+    MatBadgeModule
 ],
   templateUrl: './sales.html',
   styleUrl: './sales.scss',
@@ -31,15 +34,19 @@ export class SalesComponent implements OnInit {
   productService = inject(ProductService);
   saleService = inject(SaleService);
   utils = inject(UtilsService);
+  notificationService = inject(NotificationService);
 
   clients = signal<Array<Client>>([]);
   products = signal<Array<Product>>([]);
   originalProducts: Array<Product> = [];
 
+  public showCart = signal<boolean>(false);
+
   constructor() {
     effect(() => {
       const addToProductCart = this.saleService.addToProductCart()
       if (addToProductCart) {
+        this.notificationService.openNotification('Item adicionado ao carrinho!');
         this.saleService.productCart.update(current => [...current, addToProductCart]);
       }
     })
@@ -65,5 +72,9 @@ export class SalesComponent implements OnInit {
 
   clearCart() {
     this.products.update(current => [...current])
+  }
+
+  toggleShowCart(state: boolean) {
+    this.showCart.set(state);
   }
 }

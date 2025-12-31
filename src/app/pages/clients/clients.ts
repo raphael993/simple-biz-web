@@ -8,7 +8,8 @@ import { CreateClientComponent } from './components/create-client-component/crea
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NotificationService } from '../../services/notification.service';
-import { UtilsService } from '../../services/utils.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-clients',
@@ -19,6 +20,8 @@ import { UtilsService } from '../../services/utils.service';
     CreateClientComponent,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
+    MatBadgeModule
   ],
   templateUrl: './clients.html',
   styleUrl: './clients.scss',
@@ -26,13 +29,11 @@ import { UtilsService } from '../../services/utils.service';
 export class ClientsComponent implements OnInit {
   private readonly clientService = inject(ClientService);
   private notificationService = inject(NotificationService);
-  private utils = inject(UtilsService);
 
   public showClientForm = signal<boolean>(false);
   public clientList: Array<Client> = [];
 
   public ngOnInit(): void {
-    this.utils.mockLoaderPerSeconds(1);
     this.getClientList();
   }
 

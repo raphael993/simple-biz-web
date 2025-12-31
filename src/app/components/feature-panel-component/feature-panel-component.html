@@ -1,0 +1,21 @@
+<section class="feature-panel">
+
+  <header class="panel-header">
+    <h1>Bem-vindo ao SimpleBiz</h1>
+    <p>Gerencie suas vendas, clientes e estoque de forma simples e rápida</p>
+  </header>
+
+  <div class="feature-container">
+    @for (item of features; track item.route) {
+      <mat-card
+        class="feature-card"
+        routerLink="{{ item.route }}"
+        tabindex="0"
+      >
+        <mat-icon class="feature-icon">{{ item.icon }}</mat-icon>
+        <span class="feature-label">{{ item.label }}</span>
+      </mat-card>
+    }
+  </div>
+
+</section>

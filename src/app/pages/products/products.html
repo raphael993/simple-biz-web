@@ -1,10 +1,17 @@
 <mat-card appearance="outlined">
     <mat-card-header>
-        <mat-card-title>Gerenciamento de produtos</mat-card-title>
+        <mat-card-title>Gerenciamento de etoque</mat-card-title>
+        <mat-card-subtitle>Crie e edite produtos e serviços</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
-        <button [matButton]="!showProductForm() ? 'outlined' : ''" (click)="toggleProductForm(false)">Listagem de produtos</button>
-        <button [matButton]="showProductForm() ? 'outlined' : ''" (click)="toggleProductForm(true)">Cadastrar novo produto</button>
+        <button [matButton]="!showProductForm() ? 'outlined' : ''" (click)="toggleProductForm(false)">
+            <mat-icon>list</mat-icon>
+            Listar todos
+        </button>
+        <button [matButton]="showProductForm() ? 'outlined' : ''" (click)="toggleProductForm(true)">
+            <mat-icon>add</mat-icon>
+            Novo
+        </button>
     </mat-card-actions>
 </mat-card>
 <br>

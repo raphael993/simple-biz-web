@@ -1,7 +1,18 @@
 <mat-card appearance="outlined">
     <mat-card-header>
         <mat-card-title>Histórico de vendas</mat-card-title>
+        <mat-card-subtitle>Balanço geral das vendas por período</mat-card-subtitle>
     </mat-card-header>
+    <mat-card-actions>
+        <button [matButton]="showBalance() ? 'outlined' : ''">
+            <mat-icon>point_of_sale</mat-icon>
+            Balanço
+        </button>
+        <button [matButton]="!showBalance() ? 'outlined' : ''">
+            <mat-icon>analytics</mat-icon>
+            Avançado
+        </button>
+    </mat-card-actions>
 </mat-card>
 <br>
 

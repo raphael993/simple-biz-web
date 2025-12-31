@@ -132,7 +132,7 @@ export class CheckoutComponent {
 
     this.notificationService.openNotification('Venda realizada com sucesso!');
     this.clearState();
-    this.router.navigate(['/']);
+    this.router.navigate(['/sales']);
   }
 
   clearState() {

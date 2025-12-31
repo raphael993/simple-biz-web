@@ -1,10 +1,20 @@
 <mat-card appearance="outlined">
     <mat-card-header>
         <mat-card-title>Gerenciamento de clientes</mat-card-title>
+        <mat-card-subtitle>Crie e edite os seus clientes</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
-        <button [matButton]="!showClientForm() ? 'outlined' : ''" (click)="toggleClientForm(false)">Listagem de clientes</button>
-        <button [matButton]="showClientForm() ? 'outlined' : ''" (click)="toggleClientForm(true)">Cadastrar novo cliente</button>
+        <button
+            [matButton]="!showClientForm() ? 'outlined' : ''"
+            (click)="toggleClientForm(false)"
+        >
+            <mat-icon>list</mat-icon>
+            Listar todos
+        </button>
+        <button [matButton]="showClientForm() ? 'outlined' : ''" (click)="toggleClientForm(true)">
+            <mat-icon>add</mat-icon>
+            Novo
+        </button>
     </mat-card-actions>
 </mat-card>
 <br>

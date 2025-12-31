@@ -1,17 +1,19 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { SalesHistoryTableComponent } from './components/sales-history-table-component/sales-history-table-component';
 import { SaleService } from '../../services/sale.service';
 import { FilterSale, Sale } from '../../interfaces/sale.interface';
 import { UtilsService } from '../../services/utils.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-history',
   imports: [
     MatCardModule,
     MatButtonModule,
-    SalesHistoryTableComponent
+    SalesHistoryTableComponent,
+    MatIconModule,
   ],
   templateUrl: './history.html',
   styleUrl: './history.scss',
@@ -20,6 +22,7 @@ export class HistoryComponent {
   private readonly saleService = inject(SaleService);
   private utils = inject(UtilsService);
 
+  public showBalance = signal<boolean>(true);
   public salesList: Array<Sale> = [];
   public filteredSalesList: Array<Sale> = [];
 

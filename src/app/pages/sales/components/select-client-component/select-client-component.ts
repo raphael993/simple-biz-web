@@ -7,6 +7,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Client } from '../../../../interfaces/client.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ClientService } from '../../../../services/client.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-select-client-component',
@@ -16,6 +18,8 @@ import { ClientService } from '../../../../services/client.service';
     MatInputModule,
     MatAutocompleteModule,
     MatButtonModule,
+    MatCardModule,
+    MatIconModule
   ],
   templateUrl: './select-client-component.html',
   styleUrl: './select-client-component.scss',

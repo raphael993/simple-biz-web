@@ -1,42 +1,35 @@
-@if (!clientService.selectedClient();) {
+<mat-card class="card">
+  <mat-card-content>
 
-  <mat-form-field appearance="outline" class="full-width" matTooltip="Info about the action">
-    <mat-label>Selecionar cliente (opcional)</mat-label>
-    <input
-      matInput
-      type="text"
-      [formControl]="clientControl"
-      [matAutocomplete]="auto"
-    />
+    @if (!clientService.selectedClient();) {
+    <mat-form-field appearance="outline" class="full-width" matTooltip="Info about the action">
+      <mat-label>Selecionar cliente (opcional)</mat-label>
+      <input matInput type="text" [formControl]="clientControl" [matAutocomplete]="auto" />
 
-    <mat-autocomplete
-      #auto="matAutocomplete"
-      [displayWith]="displayFn"
-      (optionSelected)="onClientSelected($event.option.value)"
-    >
-      @for (client of filteredClients(); track client.id ?? client.name) {
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+        (optionSelected)="onClientSelected($event.option.value)">
+        @for (client of filteredClients(); track client.id ?? client.name) {
         <mat-option [value]="client">
-          {{ client.name }} 
+          {{ client.name }}
         </mat-option>
-      }
-    </mat-autocomplete>
-  </mat-form-field>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
 
-} @else {
+    } @else {
 
-  <div class="selected-client">
-    <span>
-      <strong>Cliente selecionado:</strong>
-      {{ clientService.selectedClient()?.name }}
-    </span>
+    <div class="selected-client">
+      <span>
+        <strong>Cliente selecionado:</strong>
+        {{ clientService.selectedClient()?.name }}
+      </span>
 
-    <button
-      mat-stroked-button
-      color="primary"
-      (click)="changeClient()"
-    >
-      Trocar cliente
-    </button>
-  </div>
+      <button mat-stroked-button color="primary" (click)="changeClient()">
+        Trocar
+      </button>
+    </div>
 
-}
+    }
+
+  </mat-card-content>
+</mat-card>

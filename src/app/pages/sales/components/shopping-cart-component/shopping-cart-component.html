@@ -1,12 +1,14 @@
-<div class="cart-container">
-  @if (cartItems().length === 0) {
-    <div class="empty-cart">
-      Carrinho vazio...
-    </div>
-  } @else {
+<mat-card class="card">
+  <mat-card-content>
+    <div class="cart-container">
+      @if (cartItems().length === 0) {
+      <div class="empty-cart">
+        Carrinho vazio...
+      </div>
+      } @else {
 
-    <mat-list>
-      @for (item of cartItems(); track item.product.id) {
+      <mat-list>
+        @for (item of cartItems(); track item.product.id) {
         <mat-list-item>
           <div class="cart-row">
 
@@ -22,40 +24,30 @@
               </div>
             </div>
 
-            <button
-              mat-icon-button
-              color="warn"
-              (click)="confirmDeletion(item)"
-            >
+            <button mat-icon-button color="warn" (click)="confirmDeletion(item)">
               <mat-icon>{{ item.quantity > 1 ? 'remove' : 'delete' }}</mat-icon>
             </button>
 
           </div>
         </mat-list-item>
-      }
-    </mat-list>
+        }
+      </mat-list>
 
-    <div class="cart-footer">
-      <div class="total">
-        Total:
-        <strong>{{ total() | currency:'BRL' }}</strong>
+      <div class="cart-footer">
+        <div class="total">
+          Total:
+          <strong class="cash">{{ total() | currency:'BRL' }}</strong>
+        </div>
+        <button mat-raised-button (click)="onClearCart()">
+          Limpar carrinho
+        </button>
+
+        <button mat-raised-button color="primary" class="finish-button" (click)="goToCheckout()">
+          Ir para o checkout
+        </button>
       </div>
-      <button
-        mat-raised-button
-        (click)="onClearCart()"
-      >
-        Limpar carrinho
-      </button>
-
-      <button
-        mat-raised-button
-        color="primary"
-        class="finish-button"
-        (click)="goToCheckout()"
-      >
-        Ir para o checkout
-      </button>
+      }
     </div>
 
-  }
-</div>
+  </mat-card-content>
+</mat-card>

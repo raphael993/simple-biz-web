@@ -1,39 +1,12 @@
 <mat-toolbar color="primary" class="header">
 
-  <!-- Logo -->
-  <span class="logo" routerLink="/">SimpleBiz</span>
+  <div class="logo" routerLink="/">
+    <mat-icon class="logo-icon">storefront</mat-icon>
+    <span>SimpleBiz</span>
+  </div>
 
   <span class="spacer"></span>
 
-  <!-- Menu DESKTOP -->
-  <nav class="menu-desktop">
-    <a mat-button routerLink="/">
-      <mat-icon>point_of_sale</mat-icon>
-      Vender
-    </a>
-
-    <a mat-button routerLink="/clients">
-      <mat-icon>people</mat-icon>
-      Clientes
-    </a>
-
-    <a mat-button routerLink="/products">
-      <mat-icon>inventory_2</mat-icon>
-      Produtos & Serviços
-    </a>
-
-    <a mat-button routerLink="/history">
-      <mat-icon>history</mat-icon>
-      Histórico
-    </a>
-
-    <a mat-button routerLink="/admin">
-      <mat-icon>settings</mat-icon>
-      Opções
-    </a>
-  </nav>
-
-  <!-- Botão HAMBÚRGUER (mobile) -->
   <button
     mat-icon-button
     class="menu-mobile"
@@ -43,32 +16,31 @@
     <mat-icon>menu</mat-icon>
   </button>
 
-  <!-- Menu DROPDOWN -->
-  <mat-menu #mobileMenu="matMenu">
-    <button mat-menu-item routerLink="/">
-      <mat-icon>point_of_sale</mat-icon>
-      <span>Vender</span>
-    </button>
-
-    <button mat-menu-item routerLink="/clients">
-      <mat-icon>people</mat-icon>
-      <span>Clientes</span>
-    </button>
-
-    <button mat-menu-item routerLink="/products">
-      <mat-icon>inventory_2</mat-icon>
-      <span>Produtos</span>
-    </button>
-
-    <button mat-menu-item routerLink="/history">
-      <mat-icon>history</mat-icon>
-      <span>Histórico</span>
-    </button>
-
-    <button mat-menu-item routerLink="/admin">
-      <mat-icon>settings</mat-icon>
-      <span>Opções</span>
-    </button>
-  </mat-menu>
-
 </mat-toolbar>
+
+<mat-menu #mobileMenu="matMenu" class="mobile-menu">
+  <button mat-menu-item routerLink="/sales">
+    <mat-icon>point_of_sale</mat-icon>
+    <span>Vender</span>
+  </button>
+
+  <button mat-menu-item routerLink="/clients">
+    <mat-icon>people</mat-icon>
+    <span>Clientes</span>
+  </button>
+
+  <button mat-menu-item routerLink="/products">
+    <mat-icon>inventory_2</mat-icon>
+    <span>Estoque</span>
+  </button>
+
+  <button mat-menu-item routerLink="/history">
+    <mat-icon>history</mat-icon>
+    <span>Histórico</span>
+  </button>
+
+  <button mat-menu-item routerLink="/admin">
+    <mat-icon>settings</mat-icon>
+    <span>Opções</span>
+  </button>
+</mat-menu>

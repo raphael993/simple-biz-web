@@ -1,20 +1,18 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, Inject, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { ClientService } from '../../../../services/client.service';
 import { EditClientComponent } from '../edit-client-component/edit-client-component';
 import { Client } from '../../../../interfaces/client.interface';
-import { C } from '@angular/cdk/keycodes';
 import { NotificationService } from '../../../../services/notification.service';
 import { DialogService } from '../../../../services/dialog.service';
 import { NgxMaskPipe } from 'ngx-mask';
 import { SaleService } from '../../../../services/sale.service';
 import { Sale } from '../../../../interfaces/sale.interface';
-import { CartItem, Product } from '../../../../interfaces/product.interface';
 
 @Component({
   selector: 'app-client-details-component',

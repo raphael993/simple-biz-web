@@ -1,8 +1,4 @@
 :host {
-  .full-width {
-    width: 50%;
-  }
-
   .selected-client {
     display: flex;
     align-items: center;
@@ -12,11 +8,4 @@
     border-radius: 4px;
     background-color: #fafafa;
   }
-
-  @media (max-width: 768px) {
-    .full-width {
-      width: 100%;
-    }
-  }
-
 }

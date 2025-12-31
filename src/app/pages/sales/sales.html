@@ -1,25 +1,37 @@
 <mat-card appearance="outlined">
     <mat-card-header>
         <mat-card-title>Vender</mat-card-title>
-        <mat-card-subtitle>Adicione um cliente existente, ou realize um venda anônima</mat-card-subtitle>
+        <mat-card-subtitle>Adicione um cliente, ou realize um venda anônima</mat-card-subtitle>
     </mat-card-header>
+    <mat-card-actions>
+        <button [matButton]="!showCart() ? 'outlined' : ''" (click)="toggleShowCart(false)">
+            <mat-icon>list</mat-icon>
+            Selecionar itens
+        </button>
+        <button
+            [matButton]="showCart() ? 'outlined' : ''"
+            [matBadge]="saleService.productCart().length"
+            matBadgeColor="warn"
+            [matBadgeHidden]="!saleService.productCart().length"
+            (click)="toggleShowCart(true)">
+            <mat-icon>add</mat-icon>
+            Carrinho
+        </button>
+    </mat-card-actions>
 </mat-card>
 
-<app-select-client-component [clients]="clients()" />
+<section [hidden]="showCart()">
+    <app-select-client-component [clients]="clients()" />
+     <app-product-showcase-component [products]="products()"></app-product-showcase-component>
+</section>
 
-<div class="cards-container">
-    <mat-card class="card">
-        <app-product-showcase-component
-            [products]="products()"
-        ></app-product-showcase-component>
-    </mat-card>
-
-    <mat-card class="card">
-        <mat-card-header>
-            <mat-card-title>
-                <mat-icon>shopping_cart</mat-icon>
-            </mat-card-title>
-        </mat-card-header>
-        <app-shopping-cart-component (clearCart)="clearCart()" />
-    </mat-card>
-</div>
+<section [hidden]="!showCart()">
+    <div class="cards-container">
+        <mat-card class="card">
+            <mat-card-header>
+                <mat-card-subtitle>Carrinho de compras</mat-card-subtitle>
+            </mat-card-header>
+            <app-shopping-cart-component (clearCart)="clearCart()" />
+        </mat-card>
+    </div>
+</section>

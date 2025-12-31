@@ -11,7 +11,7 @@ import { HistoryComponent } from './pages/history/history';
 import { SaleDetailsComponent } from './pages/history/components/sale-details-component/sale-details-component';
 
 export const routes: Routes = [
-    { path: '', component: SalesComponent },
+    { path: '', component: HomeComponent },
     { 
         path: 'clients',
         children: [

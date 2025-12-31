@@ -10,6 +10,7 @@ import { debounceTime, startWith } from 'rxjs';
 import { NotificationService } from '../../../../services/notification.service';
 import { SaleService } from '../../../../services/sale.service';
 import { ProductType } from '../../../../enums/product-type.enum';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-product-showcase-component',
@@ -19,7 +20,8 @@ import { ProductType } from '../../../../enums/product-type.enum';
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
   templateUrl: './product-showcase-component.html',
   styleUrl: './product-showcase-component.scss',

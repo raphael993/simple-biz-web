@@ -7,6 +7,8 @@ import { SaleService } from '../../../../services/sale.service';
 import { DialogService } from '../../../../services/dialog.service';
 import { CartItem } from '../../../../interfaces/product.interface';
 import { Router } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { NotificationService } from '../../../../services/notification.service';
 
 @Component({
   selector: 'app-shopping-cart-component',
@@ -14,7 +16,8 @@ import { Router } from '@angular/router';
     CommonModule,
     MatListModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ],
   templateUrl: './shopping-cart-component.html',
   styleUrl: './shopping-cart-component.scss',
@@ -22,6 +25,7 @@ import { Router } from '@angular/router';
 export class ShoppingCartComponent {
   private saleService = inject(SaleService);
   private dialogService = inject(DialogService);
+  private notificationService = inject(NotificationService);
   private router = inject(Router);
   private rawCart = this.saleService.productCart;
 
@@ -77,6 +81,7 @@ export class ShoppingCartComponent {
 
   private removeItem(item: CartItem) {
     this.saleService.removeFromProductCart.set([{...item.product}]);
+    this.notificationService.openNotification('Item removido do carrinho!');
     if (item.quantity > 1) {
       const index = this.rawCart().findIndex(p => p.id === item.product.id);
       const tmp = this.rawCart();
@@ -110,6 +115,7 @@ export class ShoppingCartComponent {
         if (!result) {
           return
         }
+        this.notificationService.openNotification('Todos os itens foram removidos do carrinho!');
         this.cartItems.set([]);
         this.saleService.removeFromProductCart.set(this.saleService.productCart());
         this.saleService.productCart.set([]);

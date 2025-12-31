@@ -58,7 +58,7 @@ export class ClientTableComponent implements AfterViewInit {
 
   public checkScreen() {
     if (this.utils.isMobileScreen()) {
-      this.displayedColumns = ['Nome', 'Telefone', 'AçõesMobile'];
+      this.displayedColumns = ['Nome', 'AçõesMobile'];
     }
   }
 
