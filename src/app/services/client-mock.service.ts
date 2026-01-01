@@ -14,10 +14,10 @@ export class ClientMockService {
       phoneNumber: '(11) 9 7721 2313',
       email: 'teste@gmail.com',
       address: 'Rua mota milagres, 12',
-      bithDate: new Date(),
+      bithDate: Date.now(),
       document: '123.123.123.22',
       notes: 'asdasdasdasdasdasd',
-      createAt: new Date(),
+      createAt: Date.now(),
     },
     {
       id: '2',
@@ -25,10 +25,10 @@ export class ClientMockService {
       phoneNumber: '(11) 9 7721 2313',
       email: 'teste@gmail.com',
       address: '',
-      bithDate: new Date(),
+      bithDate: Date.now(),
       document: '',
       notes: '',
-      createAt: new Date(),
+      createAt: Date.now(),
   }
   ];
 

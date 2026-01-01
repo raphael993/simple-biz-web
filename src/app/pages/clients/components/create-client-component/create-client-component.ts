@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxMaskDirective } from 'ngx-mask';
 import moment from 'moment';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-create-client-component',
@@ -16,7 +17,8 @@ import moment from 'moment';
     MatInputModule,
     MatDatepickerModule,
     MatButtonModule,
-    NgxMaskDirective
+    NgxMaskDirective,
+    MatCardModule
   ],
   templateUrl: './create-client-component.html',
   styleUrl: './create-client-component.scss',
@@ -42,7 +44,7 @@ export class CreateClientComponent implements OnInit {
       address: [null],
       bithDate: [null],
       notes: [null],
-      createAt: [new Date()]
+      createAt: [Date.now()]
     });
   }
 

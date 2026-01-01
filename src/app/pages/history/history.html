@@ -8,7 +8,7 @@
             <mat-icon>point_of_sale</mat-icon>
             Balanço
         </button>
-        <button [matButton]="!showBalance() ? 'outlined' : ''">
+        <button [matButton]="!showBalance() ? 'outlined' : ''" (click)="advancedView()">
             <mat-icon>analytics</mat-icon>
             Avançado
         </button>

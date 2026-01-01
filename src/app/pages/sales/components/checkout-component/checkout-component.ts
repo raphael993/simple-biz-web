@@ -110,7 +110,7 @@ export class CheckoutComponent {
       total: this.total(),
       profit: this.profitCalc(this.cartItems(), this.total()) - (this.discountValue()),
       paymentsList: this.paymentsList(),
-      createAt: new Date(),
+      createAt: Date.now(),
       notes: this.notes
     }
 

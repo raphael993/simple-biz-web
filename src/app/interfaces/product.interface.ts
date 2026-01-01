@@ -8,7 +8,7 @@ export interface Product {
     price: number;
     type: ProductType;
     isActive: boolean;
-    createAt: Date;
+    createAt: number;
     quantity: number;
 }
 

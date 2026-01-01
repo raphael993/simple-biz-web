@@ -1,69 +1,63 @@
-<form [formGroup]="productForm">
-    <!-- Nome -->
-    <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Nome</mat-label>
-        <input matInput formControlName="name">
+<mat-card>
+    <mat-card-content>
+        <form [formGroup]="productForm">
+            <!-- Nome -->
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="name">
 
-        @if (productForm.get('name')?.touched && productForm.get('name')?.invalid) {
-        <mat-error>
-            @if (productForm.get('name')?.errors?.['required']) {
-            Campo obrigatório
+                @if (productForm.get('name')?.touched && productForm.get('name')?.invalid) {
+                <mat-error>
+                    @if (productForm.get('name')?.errors?.['required']) {
+                    Campo obrigatório
+                    }
+                </mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Descrição</mat-label>
+                <textarea matInput rows="3" formControlName="description"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option value="product">Produto</mat-option>
+                    <mat-option value="service">Serviço</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            @if (isProduct()) {
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Preço de compra</mat-label>
+                <input matInput type="text" currencyMask formControlName="costPrice">
+            </mat-form-field>
             }
-        </mat-error>
-        }
-    </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Descrição</mat-label>
-        <textarea matInput rows="3" formControlName="description"></textarea>
-    </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Preço de venda</mat-label>
+                <input matInput type="text" currencyMask formControlName="price">
+            </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Tipo</mat-label>
-        <mat-select formControlName="type">
-        <mat-option value="product">Produto</mat-option>
-        <mat-option value="service">Serviço</mat-option>
-        </mat-select>
-    </mat-form-field>
+            @if (isProduct()) {
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Quantidade em estoque</mat-label>
+                <input matInput type="number" formControlName="quantity">
+            </mat-form-field>
+            }
 
-    @if (isProduct()) {
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Preço de compra</mat-label>
-            <input 
-                matInput
-                type="text"
-                currencyMask
-                formControlName="costPrice"
-            >
-        </mat-form-field>
-    }
+            <mat-checkbox formControlName="isActive">
+                Ativo
+            </mat-checkbox>
+        </form>
 
-    <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Preço de venda</mat-label>
-        <input 
-            matInput
-            type="text"
-            currencyMask
-            formControlName="price"
-        >
-    </mat-form-field>
-
-    @if (isProduct()) {
-        <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Quantidade em estoque</mat-label>
-            <input matInput type="number" formControlName="quantity">
-        </mat-form-field>
-    }
-
-    <mat-checkbox formControlName="isActive">
-        Ativo
-    </mat-checkbox>
-</form>
-
-<div class="form-actions">
-    <button mat-raised-button color="primary" type="submit" [disabled]="productForm.invalid"
-        (click)="createProductAction()">
-        Criar produto
-    </button>
-    <button mat-stroked-button type="button" (click)="clearForm()">Limpar</button>
-</div>
+        <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="productForm.invalid"
+                (click)="createProductAction()">
+                Criar produto
+            </button>
+            <button mat-stroked-button type="button" (click)="clearForm()">Limpar</button>
+        </div>
+    </mat-card-content>
+</mat-card>

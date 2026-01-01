@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxCurrencyDirective } from 'ngx-currency';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-create-product-component',
@@ -19,7 +20,8 @@ import { NgxCurrencyDirective } from 'ngx-currency';
     MatButtonModule,
     MatSelectModule,
     MatCheckboxModule,
-    NgxCurrencyDirective
+    NgxCurrencyDirective,
+    MatCardModule
   ],
   templateUrl: './create-product-component.html',
   styleUrl: './create-product-component.scss',
@@ -53,7 +55,7 @@ export class CreateProductComponent {
       type: ['product', [Validators.required]],
       isActive: [true, [Validators.required]],
       quantity: [null],
-      createAt: [new Date()],
+      createAt: [Date.now()],
     });
   }
 

@@ -6,6 +6,7 @@ import { SaleService } from '../../services/sale.service';
 import { FilterSale, Sale } from '../../interfaces/sale.interface';
 import { UtilsService } from '../../services/utils.service';
 import { MatIconModule } from '@angular/material/icon';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-history',
@@ -21,6 +22,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class HistoryComponent {
   private readonly saleService = inject(SaleService);
   private utils = inject(UtilsService);
+  private notificationService = inject(NotificationService);
 
   public showBalance = signal<boolean>(true);
   public salesList: Array<Sale> = [];
@@ -48,22 +50,30 @@ export class HistoryComponent {
   }
 
   private applyFilter(data: Array<Sale>, filters: FilterSale) {
-      if (filters.clear) {
-        this.getSaleList();
-        return;
-      }
-
-      let filtered: Array<Sale> = data;
-
-
-      if (filters.startDate) {
-        filtered = filtered.filter(sale => sale.createAt >= (filters.startDate ?? new Date()))
-      }
-
-      if (filters.endDate) {
-        filtered = filtered.filter(sale => sale.createAt <= (filters.endDate ?? new Date()))
-      }
-  
-      this.filteredSalesList = filtered;
+    if (filters.clear) {
+      this.getSaleList();
+      return;
     }
+
+    const start = filters.startDate
+      ? new Date(filters.startDate).getTime()
+      : null;
+
+    const end = filters.endDate
+      ? new Date(filters.endDate).setHours(23, 59, 59, 999)
+      : null;
+
+    this.filteredSalesList = data.filter(sale => {
+      const saleDate = new Date(sale.createAt as any).getTime();
+
+      if (start && saleDate < start) return false;
+      if (end && saleDate > end) return false;
+
+      return true;
+    });
+  }
+
+  public advancedView() {
+    this.notificationService.openNotification('Esta funcionalidade não está disponível no momento.');
+  }
 }

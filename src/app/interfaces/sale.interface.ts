@@ -14,7 +14,7 @@ export interface Sale {
     total: number;
     profit?: number;
     paymentsList?: Payment[];
-    createAt: Date,
+    createAt: number,
     notes?: string | null;
 }
 

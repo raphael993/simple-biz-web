@@ -85,6 +85,10 @@
 
   @media (max-width: 480px) {
     flex-direction: column;
+    
+    button {
+      flex: none;
+    }
   }
 }
 

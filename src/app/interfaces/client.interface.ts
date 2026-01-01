@@ -4,8 +4,8 @@ export interface Client {
     phoneNumber?: string;
     email?: string;
     address?: string;
-    bithDate?: Date;
+    bithDate?: number;
     document?: string;
     notes?: string;
-    createAt?: Date;
+    createAt?: number;
 }
