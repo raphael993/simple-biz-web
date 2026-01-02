@@ -80,7 +80,7 @@ export class ShoppingCartComponent {
   }
 
   private removeItem(item: CartItem) {
-    this.saleService.removeFromProductCart.set([{...item.product}]);
+    this.saleService.onRemoveFromProductCart([{...item.product}]);
     this.notificationService.openNotification('Item removido do carrinho!');
     if (item.quantity > 1) {
       const index = this.rawCart().findIndex(p => p.id === item.product.id);
@@ -117,9 +117,8 @@ export class ShoppingCartComponent {
         }
         this.notificationService.openNotification('Todos os itens foram removidos do carrinho!');
         this.cartItems.set([]);
-        this.saleService.removeFromProductCart.set(this.saleService.productCart());
+        this.saleService.onRemoveFromProductCart(this.saleService.productCart());
         this.saleService.productCart.set([]);
-        this.saleService.addToProductCart.set(null);
         this.clearCart.emit();
       });
   }

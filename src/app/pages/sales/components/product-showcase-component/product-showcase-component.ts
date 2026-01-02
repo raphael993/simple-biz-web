@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, input, output, signal } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, input, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,6 +11,7 @@ import { NotificationService } from '../../../../services/notification.service';
 import { SaleService } from '../../../../services/sale.service';
 import { ProductType } from '../../../../enums/product-type.enum';
 import { MatCardModule } from '@angular/material/card';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-product-showcase-component',
@@ -26,7 +27,7 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './product-showcase-component.html',
   styleUrl: './product-showcase-component.scss',
 })
-export class ProductShowcaseComponent {
+export class ProductShowcaseComponent implements OnInit {
   products = input<Product[]>([]);
   searchControl = new FormControl('');
 
@@ -39,11 +40,40 @@ export class ProductShowcaseComponent {
   productType = ProductType;  
 
   constructor() {
+    this.subscribeToAddToProductCart();
+    this.onRemoveFromProductCartSubscriber();
     this.listenSearchChanges();
+  }
 
-    effect(() => {
-      const removedFromCart = this.saleService.removeFromProductCart();
+  ngOnInit() {
+    setTimeout(() => {
+      this.updateStockWithProductCart();
+    },1000);
+  }
 
+  updateStockWithProductCart() {
+    const productCart = this.saleService.productCart();
+    if (productCart.length && this.filteredProducts().length) {
+      productCart.forEach(cartItem => this.updateItemQuantity(cartItem, false));
+    }
+  }
+
+  subscribeToAddToProductCart() {
+    this.saleService.addToProductCartSubscriber()
+    .pipe(takeUntilDestroyed())
+    .subscribe(addToProductCart => {
+      if (addToProductCart) {
+        this.notificationService.openNotification('Item adicionado ao carrinho!');
+        this.saleService.productCart.update(current => [...current, addToProductCart]);
+      }
+    });
+  }
+
+  onRemoveFromProductCartSubscriber() {
+    this.saleService.removeFromProductCartSubscriber()
+    .pipe(takeUntilDestroyed())
+    .subscribe(removedFromCart => {
+      
       if (!removedFromCart.length || removedFromCart[0].type === ProductType.SERVICE) {
         return;
       }
@@ -51,7 +81,7 @@ export class ProductShowcaseComponent {
       removedFromCart.forEach((toRemove) => {
         this.updateItemQuantity(toRemove, true);
       })
-    })
+    });
   }
 
   private listenSearchChanges() {
@@ -82,7 +112,7 @@ export class ProductShowcaseComponent {
     if (!product) return;
     
     if (product.type === ProductType.SERVICE) {
-      this.saleService.addToProductCart.set({...product});
+      this.saleService.onAddToProductCart({...product});
       return;
     }
     if (product.quantity == 0) {
@@ -90,7 +120,7 @@ export class ProductShowcaseComponent {
       return;
     }
 
-    this.saleService.addToProductCart.set({...product});
+    this.saleService.onAddToProductCart({...product});
     this.updateItemQuantity(product, false);
   }
 
@@ -109,7 +139,7 @@ export class ProductShowcaseComponent {
       if (increase) {
         current[target].quantity += 1;
       } else {
-        if (current[target].quantity > 0) {
+        if (current[target]?.quantity > 0) {
           current[target].quantity -= 1;
         }
       }

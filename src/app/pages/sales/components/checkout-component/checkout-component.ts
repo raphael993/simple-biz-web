@@ -13,7 +13,7 @@ import { ClientService } from '../../../../services/client.service';
 import { Sale } from '../../../../interfaces/sale.interface';
 import { DialogService } from '../../../../services/dialog.service';
 import { NotificationService } from '../../../../services/notification.service';
-import { CartItem, Product } from '../../../../interfaces/product.interface';
+import { CartItem } from '../../../../interfaces/product.interface';
 import { ProductService } from '../../../../services/product.service';
 import { ProductType } from '../../../../enums/product-type.enum';
 
@@ -63,7 +63,7 @@ export class CheckoutComponent {
 
   goBack(): void {
     this.saleService.checkoutData.set([]);
-    this.router.navigate(['../']);
+    this.router.navigate(['/sales']);
   }
 
   onDiscountChange(value: string): void {
@@ -137,8 +137,6 @@ export class CheckoutComponent {
 
   clearState() {
     this.clientService.selectedClient.set(null);
-    this.saleService.addToProductCart.set(null);
-    this.saleService.removeFromProductCart.set([]);
     this.saleService.productCart.set([]);
     this.saleService.checkoutData.set([]);
   }

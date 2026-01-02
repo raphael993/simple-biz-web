@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { SelectClientComponent } from "./components/select-client-component/select-client-component";
@@ -41,16 +41,6 @@ export class SalesComponent implements OnInit {
   originalProducts: Array<Product> = [];
 
   public showCart = signal<boolean>(false);
-
-  constructor() {
-    effect(() => {
-      const addToProductCart = this.saleService.addToProductCart()
-      if (addToProductCart) {
-        this.notificationService.openNotification('Item adicionado ao carrinho!');
-        this.saleService.productCart.update(current => [...current, addToProductCart]);
-      }
-    })
-  }
 
   ngOnInit(): void {
     this.utils.mockLoaderPerSeconds(1);
