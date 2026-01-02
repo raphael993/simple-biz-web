@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { UtilsService } from '../../services/utils.service';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NotificationService } from '../../services/notification.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-sales',
@@ -43,20 +44,28 @@ export class SalesComponent implements OnInit {
   public showCart = signal<boolean>(false);
 
   ngOnInit(): void {
-    this.utils.mockLoaderPerSeconds(1);
     this.getProducts();
     this.getClients();
+    this.utils.mockLoaderPerSeconds(1);
   }
 
   getProducts() {
-    this.productService.getProductList().subscribe(data => {
-      this.products.set(data);
+    this.productService.getProductList()
+    .pipe(take(1))
+    .subscribe(data => {
+      if (data?.length) {
+        this.products.set(data);
+      }
     });
   }
 
   getClients() {
-    this.clientService.getClientList().subscribe(data => {
-      this.clients.set(data);
+    this.clientService.getClientList()
+    .pipe(take(1))
+    .subscribe(data => {
+      if (data?.length) {
+        this.clients.set(data);
+      }
     });
   }
 

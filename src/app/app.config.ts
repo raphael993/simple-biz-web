@@ -7,6 +7,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { provideEnvironmentNgxCurrency } from 'ngx-currency';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import { APP_CONFIG } from './config/app-config.token';
 
 export const CUSTOM_DATE_FORMATS: MatDateFormats = {
   parse: {
@@ -43,6 +44,12 @@ export const appConfig: ApplicationConfig = {
       registrationStrategy: 'registerWhenStable:30000'
     }),
     provideMomentDateAdapter(),
-    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+    {
+      provide: APP_CONFIG,
+      useValue: {
+        offlineMode: true
+      }
+    }
   ]
 };

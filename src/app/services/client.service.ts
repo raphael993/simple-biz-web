@@ -1,32 +1,52 @@
-import { inject, Injectable, signal } from "@angular/core";
+import { Inject, inject, Injectable, signal } from "@angular/core";
 import { Client } from "../interfaces/client.interface";
 import { ClientStorageService } from "../storage/client-storage.service";
-import { from, Observable } from "rxjs";
+import { from, Observable, of } from "rxjs";
+import { APP_CONFIG } from "../config/app-config.token";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
+  constructor(
+    @Inject(APP_CONFIG) private config: { offlineMode: boolean }
+  ) {}
+  
   public selectedClient = signal<Client | null>(null);
   private readonly clientStorageService = inject(ClientStorageService);
 
   public getClientList(): Observable<Client[]> {
-    return from(this.clientStorageService.getAll());
+    if (this.config.offlineMode) {
+      return from(this.clientStorageService.getAll());
+    }
+    return of();
   }
 
   public getClient(id: string): Observable<Client | undefined> {
-    return from(this.clientStorageService.getById(id));
+    if (this.config.offlineMode) {
+      return from(this.clientStorageService.getById(id));
+    }
+    return of();
   }
 
   public createClient(client: Client): Observable<void> {
-    return from(this.clientStorageService.create(client));
+    if (this.config.offlineMode) {
+      return from(this.clientStorageService.create(client));
+    }
+    return of();
   }
 
   public removeClient(id: string): Observable<void> {
-    return from(this.clientStorageService.delete(id));
+    if (this.config.offlineMode) {
+      return from(this.clientStorageService.delete(id));
+    }
+    return of();
   }
 
   public updateClient(client: Client): Observable<void> {
-    return from(this.clientStorageService.update(client));
+    if (this.config.offlineMode) {
+      return from(this.clientStorageService.update(client));
+    }
+    return of();
   }
 }

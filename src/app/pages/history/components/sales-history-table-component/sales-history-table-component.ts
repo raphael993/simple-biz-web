@@ -13,7 +13,6 @@ import { SaleService } from '../../../../services/sale.service';
 import { Router } from '@angular/router';
 import { UtilsService } from '../../../../services/utils.service';
 import { HistoryFilterComponent } from "../history-filter-component/history-filter-component";
-import { CdkVirtualScrollableElement } from "@angular/cdk/scrolling";
 
 @Component({
   selector: 'app-sales-history-table-component',
@@ -29,7 +28,6 @@ import { CdkVirtualScrollableElement } from "@angular/cdk/scrolling";
     CurrencyPipe,
     DatePipe,
     HistoryFilterComponent,
-    CdkVirtualScrollableElement
 ],
   templateUrl: './sales-history-table-component.html',
   styleUrl: './sales-history-table-component.scss',

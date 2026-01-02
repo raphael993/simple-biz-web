@@ -1,13 +1,18 @@
-import { inject, Injectable, signal } from "@angular/core";
+import { Inject, inject, Injectable, signal } from "@angular/core";
 import { CartItem, Product } from "../interfaces/product.interface";
-import { from, Observable, Subject } from "rxjs";
+import { from, Observable, of, Subject } from "rxjs";
 import { FilterSale, Sale } from "../interfaces/sale.interface";
 import { SaleStorageService } from "../storage/sale-storage.service";
+import { APP_CONFIG } from "../config/app-config.token";
 
 @Injectable({
   providedIn: 'root',
 })
 export class SaleService {
+  constructor(
+    @Inject(APP_CONFIG) private config: { offlineMode: boolean }
+  ) {}
+  
   private _addToProductCart$ = new Subject<Product | null>();
   private _removeFromProductCart$ = new Subject<Product[]>();
 
@@ -35,14 +40,23 @@ export class SaleService {
   }
 
   public getSalesList(): Observable<Sale[]> {
-    return from(this.saleStorageService.getAll());
+    if (this.config.offlineMode) {
+      return from(this.saleStorageService.getAll());
+    }
+    return of();
   }
 
   public createSale(payload: Sale): Observable<void> {
-    return from(this.saleStorageService.create(payload));
+    if (this.config.offlineMode) { 
+      return from(this.saleStorageService.create(payload));
+    }
+    return of();
   }
 
   public getSalesByClientId(clientId: string): Observable<Sale[]> {
-    return from(this.saleStorageService.getSalesByClientId(clientId));
+    if (this.config.offlineMode) {
+      return from(this.saleStorageService.getSalesByClientId(clientId));
+    }
+    return of();
   }
 }
