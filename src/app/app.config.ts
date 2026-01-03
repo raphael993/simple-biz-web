@@ -51,8 +51,8 @@ export const appConfig: ApplicationConfig = {
       provide: APP_CONFIG,
       useValue: {
         offlineMode: false,
-        //api: 'https://simple-biz-backend.onrender.com/api'
-        api: 'http://localhost:3000/api'
+        api: 'https://simple-biz-backend.onrender.com/api'
+        //api: 'http://localhost:3000/api'
       }
     },
     provideHttpClient(
