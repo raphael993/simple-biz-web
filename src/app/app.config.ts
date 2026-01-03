@@ -8,6 +8,8 @@ import { provideEnvironmentNgxCurrency } from 'ngx-currency';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { APP_CONFIG } from './config/app-config.token';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { loaderInterceptor } from './interceptors/loader.interceptor';
 
 export const CUSTOM_DATE_FORMATS: MatDateFormats = {
   parse: {
@@ -48,8 +50,15 @@ export const appConfig: ApplicationConfig = {
     {
       provide: APP_CONFIG,
       useValue: {
-        offlineMode: true
+        offlineMode: false,
+        api: 'https://simple-biz-backend.onrender.com/api'
+        //api: 'http://localhost:3000/api'
       }
-    }
+    },
+    provideHttpClient(
+      withInterceptors([
+        loaderInterceptor
+      ])
+    )
   ]
 };

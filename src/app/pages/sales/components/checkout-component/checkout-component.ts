@@ -115,11 +115,13 @@ export class CheckoutComponent {
     }
 
     this.saleService.createSale(sale).subscribe(() => {
+      debugger
       this.removeSoldProductsFromStock(sale.cartItems);
     });
   }
 
   removeSoldProductsFromStock(soldItems: CartItem[]) {
+    debugger
     soldItems.forEach(sold => {
       if (sold.product.type === ProductType.SERVICE) {
         return;
@@ -127,7 +129,7 @@ export class CheckoutComponent {
       this.productService.updateProduct({ 
         ...sold.product,
         quantity: (sold.product.quantity - sold.quantity)
-      })
+      }).subscribe();
     });
 
     this.notificationService.openNotification('Venda realizada com sucesso!');

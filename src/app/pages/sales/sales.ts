@@ -46,7 +46,6 @@ export class SalesComponent implements OnInit {
   ngOnInit(): void {
     this.getProducts();
     this.getClients();
-    this.utils.mockLoaderPerSeconds(1);
   }
 
   getProducts() {

@@ -35,18 +35,24 @@ export class EditClientComponent implements OnInit {
   }
 
   private createForm(): void {
-    this.clientForm = this.fb.group({
-      id: [this.selectedClient()?.id],
-      name: [this.selectedClient()?.name, [Validators.required, Validators.minLength(3)]],
-      email: [this.selectedClient()?.email, [Validators.email]],
-      phoneNumber: [this.selectedClient()?.phoneNumber],
-      document: [this.selectedClient()?.document],
-      address: [this.selectedClient()?.address],
-      bithDate: [this.selectedClient()?.bithDate],
-      notes: [this.selectedClient()?.notes],
-      createAt: [this.selectedClient()?.createAt]
-    });
-  }
+  const client = this.selectedClient();
+  const bithDate =
+    client?.bithDate != null
+      ? new Date(client.bithDate)
+      : null;
+
+  this.clientForm = this.fb.group({
+    id: [client?.id],
+    name: [client?.name, [Validators.required, Validators.minLength(3)]],
+    email: [client?.email, [Validators.email]],
+    phoneNumber: [client?.phoneNumber],
+    document: [client?.document],
+    address: [client?.address],
+    bithDate: [bithDate],
+    notes: [client?.notes],
+    createAt: [client?.createAt]
+  });
+}
 
   public editClientAction() {
     if (!this.clientForm.valid) {

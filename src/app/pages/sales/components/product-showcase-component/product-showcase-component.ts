@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, effect, inject, input, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -37,9 +37,21 @@ export class ProductShowcaseComponent implements OnInit {
   notificationService = inject(NotificationService);
   saleService = inject(SaleService);
 
-  productType = ProductType;  
+  productType = ProductType;
 
   constructor() {
+    effect(() => {
+      const products = this.products();
+
+      if (!products.length) return;
+
+      this.filteredProducts.set(
+        this.removeNonListedItems(
+          products.filter(p => p.isActive)
+        )
+      );
+    });
+
     this.subscribeToAddToProductCart();
     this.onRemoveFromProductCartSubscriber();
     this.listenSearchChanges();
@@ -48,7 +60,7 @@ export class ProductShowcaseComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.updateStockWithProductCart();
-    },1000);
+    }, 1000);
   }
 
   updateStockWithProductCart() {
@@ -60,28 +72,28 @@ export class ProductShowcaseComponent implements OnInit {
 
   subscribeToAddToProductCart() {
     this.saleService.addToProductCartSubscriber()
-    .pipe(takeUntilDestroyed())
-    .subscribe(addToProductCart => {
-      if (addToProductCart) {
-        this.notificationService.openNotification('Item adicionado ao carrinho!');
-        this.saleService.productCart.update(current => [...current, addToProductCart]);
-      }
-    });
+      .pipe(takeUntilDestroyed())
+      .subscribe(addToProductCart => {
+        if (addToProductCart) {
+          this.notificationService.openNotification('Item adicionado ao carrinho!');
+          this.saleService.productCart.update(current => [...current, addToProductCart]);
+        }
+      });
   }
 
   onRemoveFromProductCartSubscriber() {
     this.saleService.removeFromProductCartSubscriber()
-    .pipe(takeUntilDestroyed())
-    .subscribe(removedFromCart => {
-      
-      if (!removedFromCart.length || removedFromCart[0].type === ProductType.SERVICE) {
-        return;
-      }
+      .pipe(takeUntilDestroyed())
+      .subscribe(removedFromCart => {
 
-      removedFromCart.forEach((toRemove) => {
-        this.updateItemQuantity(toRemove, true);
-      })
-    });
+        if (!removedFromCart.length || removedFromCart[0].type === ProductType.SERVICE) {
+          return;
+        }
+
+        removedFromCart.forEach((toRemove) => {
+          this.updateItemQuantity(toRemove, true);
+        })
+      });
   }
 
   private listenSearchChanges() {
@@ -93,11 +105,10 @@ export class ProductShowcaseComponent implements OnInit {
       .subscribe(value => {
         const search = (value ?? '').toLowerCase();
 
-        const filtered = this.products()
-          .filter(p =>
-            p.isActive &&
-            p.name.toLowerCase().includes(search)
-          );
+        const filtered = this.products().filter(p =>
+          p.isActive &&
+          p.name.toLowerCase().includes(search)
+        );
 
         this.filteredProducts.set(this.removeNonListedItems(filtered));
       });
@@ -110,9 +121,9 @@ export class ProductShowcaseComponent implements OnInit {
   addToCart() {
     const product = this.selectedProduct();
     if (!product) return;
-    
+
     if (product.type === ProductType.SERVICE) {
-      this.saleService.onAddToProductCart({...product});
+      this.saleService.onAddToProductCart({ ...product });
       return;
     }
     if (product.quantity == 0) {
@@ -120,7 +131,7 @@ export class ProductShowcaseComponent implements OnInit {
       return;
     }
 
-    this.saleService.onAddToProductCart({...product});
+    this.saleService.onAddToProductCart({ ...product });
     this.updateItemQuantity(product, false);
   }
 
@@ -135,7 +146,7 @@ export class ProductShowcaseComponent implements OnInit {
   updateItemQuantity(product: Product, increase: boolean = true) {
     this.filteredProducts.update(current => {
       const target = current.findIndex(item => item.id === product.id);
-      
+
       if (increase) {
         current[target].quantity += 1;
       } else {

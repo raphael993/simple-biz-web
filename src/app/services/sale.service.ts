@@ -1,18 +1,15 @@
-import { Inject, inject, Injectable, signal } from "@angular/core";
+import { inject, Injectable, signal } from "@angular/core";
 import { CartItem, Product } from "../interfaces/product.interface";
 import { from, Observable, of, Subject } from "rxjs";
 import { FilterSale, Sale } from "../interfaces/sale.interface";
 import { SaleStorageService } from "../storage/sale-storage.service";
 import { APP_CONFIG } from "../config/app-config.token";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root',
 })
 export class SaleService {
-  constructor(
-    @Inject(APP_CONFIG) private config: { offlineMode: boolean }
-  ) {}
-  
   private _addToProductCart$ = new Subject<Product | null>();
   private _removeFromProductCart$ = new Subject<Product[]>();
 
@@ -22,6 +19,8 @@ export class SaleService {
   public filterChange = signal<FilterSale | null>(null);
 
   private saleStorageService = inject(SaleStorageService);
+  private config = inject(APP_CONFIG);
+  private readonly httpClient = inject(HttpClient);
 
   public addToProductCartSubscriber() {
     return this._addToProductCart$.asObservable();
@@ -43,20 +42,20 @@ export class SaleService {
     if (this.config.offlineMode) {
       return from(this.saleStorageService.getAll());
     }
-    return of();
+    return this.httpClient.get<Sale[]>(`${this.config.api}/sales`);
   }
 
   public createSale(payload: Sale): Observable<void> {
     if (this.config.offlineMode) { 
       return from(this.saleStorageService.create(payload));
     }
-    return of();
+    return this.httpClient.post<void>(`${this.config.api}/sales`, payload);
   }
 
   public getSalesByClientId(clientId: string): Observable<Sale[]> {
     if (this.config.offlineMode) {
       return from(this.saleStorageService.getSalesByClientId(clientId));
     }
-    return of();
+    return this.httpClient.get<Sale[]>(`${this.config.api}/sales/${clientId}`);
   }
 }
