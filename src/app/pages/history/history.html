@@ -4,11 +4,11 @@
         <mat-card-subtitle>Balanço geral das vendas por período</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
-        <button [matButton]="showBalance() ? 'outlined' : ''">
+        <button [matButton]="showBalance() ? 'outlined' : ''" (click)="toggleShowBalance(true)">
             <mat-icon>point_of_sale</mat-icon>
             Balanço
         </button>
-        <button [matButton]="!showBalance() ? 'outlined' : ''" (click)="advancedView()">
+        <button [matButton]="!showBalance() ? 'outlined' : ''" (click)="toggleShowBalance(false)">
             <mat-icon>analytics</mat-icon>
             Avançado
         </button>
@@ -16,8 +16,16 @@
 </mat-card>
 <br>
 
+@if(showBalance()) {
 <mat-card appearance="outlined">
     <mat-card-content>
         <app-sales-history-table-component [salesList]="filteredSalesList" />
     </mat-card-content>
 </mat-card>
+} @else {
+<mat-card appearance="outlined">
+    <mat-card-content>
+        <app-dashboard />
+    </mat-card-content>
+</mat-card>
+}

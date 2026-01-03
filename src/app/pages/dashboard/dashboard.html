@@ -1,0 +1,56 @@
+<div class="dashboard-container">
+
+  <!-- Filtro de período -->
+  <mat-button-toggle-group
+    [value]="period()"
+    (change)="changePeriod($event.value)"
+    exclusive>
+    <mat-button-toggle value="month">Mês</mat-button-toggle>
+    <mat-button-toggle value="year">Ano</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <div class="grid">
+
+    <!-- Top Produtos -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Top 5 Produtos Mais Vendidos</mat-card-title>
+        <mat-card-subtitle>
+          Quantidade vendida no período
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <apx-chart
+          [series]="[{ name: 'Quantidade', data: topProductsSeries() }]"
+          [chart]="topProductsChart"
+          [xaxis]="{ categories: topProductsCategories() }"
+          [plotOptions]="topProductsPlot"
+          [dataLabels]="topProductsDataLabels">
+        </apx-chart>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Lucro -->
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Lucro</mat-card-title>
+        <mat-card-subtitle>
+          Evolução do lucro por {{ period() === 'month' ? 'mês' : 'ano' }}
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <apx-chart
+          [series]="profitSeries()"
+          [chart]="profitChart"
+          [xaxis]="profitXAxis()"
+          [stroke]="profitStroke"
+          [yaxis]="profitYAxis"
+          [tooltip]="profitTooltip">
+        </apx-chart>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

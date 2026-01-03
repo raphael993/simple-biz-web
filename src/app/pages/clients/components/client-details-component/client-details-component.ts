@@ -97,4 +97,8 @@ export class ClientDetailsComponent implements OnInit {
       this.clientSales = data;
     })
   }
+
+  public ngOnDestroy(): void {
+    this.clientService.selectedClient.set(null);
+  }
 }

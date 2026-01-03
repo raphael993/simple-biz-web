@@ -7,6 +7,8 @@ import { FilterSale, Sale } from '../../interfaces/sale.interface';
 import { UtilsService } from '../../services/utils.service';
 import { MatIconModule } from '@angular/material/icon';
 import { NotificationService } from '../../services/notification.service';
+import { DashboardComponent } from "../dashboard/dashboard";
+import { APP_CONFIG } from '../../config/app-config.token';
 
 @Component({
   selector: 'app-history',
@@ -15,7 +17,8 @@ import { NotificationService } from '../../services/notification.service';
     MatButtonModule,
     SalesHistoryTableComponent,
     MatIconModule,
-  ],
+    DashboardComponent
+],
   templateUrl: './history.html',
   styleUrl: './history.scss',
 })
@@ -23,6 +26,7 @@ export class HistoryComponent {
   private readonly saleService = inject(SaleService);
   private utils = inject(UtilsService);
   private notificationService = inject(NotificationService);
+  private config = inject(APP_CONFIG);
 
   public showBalance = signal<boolean>(true);
   public salesList: Array<Sale> = [];
@@ -73,7 +77,10 @@ export class HistoryComponent {
     });
   }
 
-  public advancedView() {
-    this.notificationService.openNotification('Esta funcionalidade não está disponível no momento.');
+  public toggleShowBalance(state: boolean) {
+    if (this.showBalance() === false && this.config.offlineMode) {
+      return this.notificationService.openNotification('Esta funcionalidade não está disponível no momento.');
+    }
+    this.showBalance.update(current => state);
   }
 }
