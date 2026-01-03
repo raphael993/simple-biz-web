@@ -19,7 +19,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     NgApexchartsModule,
     MatCardModule,
     MatButtonToggleModule,
-    CurrencyPipe
+    CurrencyPipe,
+    MatCardModule
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
