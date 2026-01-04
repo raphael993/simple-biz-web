@@ -41,7 +41,7 @@ export class ClientDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.selectedClient()) {
-      this.router.navigate(['../']);
+      this.router.navigate(['/sales']);
     }
     this.getClientSalesById();
   }
